@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_profit/screens/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -61,7 +62,12 @@ class HomeScreen extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
                                       side: BorderSide(color: Colors.blue)),
-                                  onPressed: (){},
+                                  onPressed: (){
+                                    Navigator.push(context,
+                                      MaterialPageRoute(builder: (context)=> LoginScreen())
+                                    );
+
+                                  },
                                 ),
                               ),
                               SizedBox(

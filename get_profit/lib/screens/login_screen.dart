@@ -7,11 +7,14 @@ class LoginScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Colors.blue,
+          iconTheme: IconThemeData(
+            color: Colors.white,
+          ),
         ),
         backgroundColor: Colors.blue,
         body:
         ListView(
-          padding: EdgeInsets.only(top: 100),
+          padding: EdgeInsets.only(top: 80),
           children: <Widget>[
             Center(
                 child: Text("LOGIN",
@@ -33,21 +36,23 @@ class LoginScreen extends StatelessWidget {
                                 SizedBox(height: 20,),
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      hintText: "Usuário",
+                                      hintText: "USUÁRIO",
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide:
                                           (BorderSide(color: Colors.white)))),
+                                  style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 16,
                                 ),
                                 TextFormField(
                                   decoration: InputDecoration(
-                                      hintText: "Senha",
+                                      hintText: "SENHA",
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide:
                                           (BorderSide(color: Colors.white)))),
                                   obscureText: true,
+                                  style: TextStyle(color: Colors.white),
                                 ),
                                 SizedBox(
                                   height: 20,
