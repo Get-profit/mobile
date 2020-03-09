@@ -16,9 +16,9 @@ class LoginScreen extends StatelessWidget {
             Center(
                 child: Text("LOGIN",
                     style: TextStyle(
-                        color: Colors.white, fontSize: 28))
+                        color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold))
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 35,),
             Center(
                 child: Container(
                     width: 350,
