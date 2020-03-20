@@ -19,7 +19,6 @@ class ServiceScreen extends StatelessWidget {
       ListView(
         padding: EdgeInsets.only(top: 20),
         children: <Widget>[
-          SizedBox(height: 35,),
           Center(
               child: Container(
                   width: 350,
@@ -65,6 +64,49 @@ class ServiceScreen extends StatelessWidget {
                                 height: 16,
                               ),
                               TextFormField(
+                                  decoration: InputDecoration(
+                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
+                                      hintText: "Marca",
+                                      hintStyle: TextStyle(color: Colors.green),
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                          (BorderSide(color: Colors.green)))),
+                                  style: TextStyle(color: Colors.green),
+                                  keyboardType: TextInputType.number
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              TextFormField(
+                                  decoration: InputDecoration(
+                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
+                                      hintText: "Modelo",
+                                      hintStyle: TextStyle(color: Colors.green),
+                                      enabledBorder: UnderlineInputBorder(
+                                          borderSide:
+                                          (BorderSide(color: Colors.green)))),
+                                  style: TextStyle(color: Colors.green),
+                                  keyboardType: TextInputType.number
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              TextFormField(
+                                decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
+                                    hintText: "Defeito",
+                                    hintStyle: TextStyle(color: Colors.green),
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                        (BorderSide(color: Colors.green)))),
+                                style: TextStyle(color: Colors.green),
+                                keyboardType: TextInputType.multiline,
+                                maxLines: 3,
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              TextFormField(
                                 decoration: InputDecoration(
                                     focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
                                     hintText: "Descrição",
@@ -74,8 +116,10 @@ class ServiceScreen extends StatelessWidget {
                                         (BorderSide(color: Colors.green)))),
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.multiline,
-                                maxLines: 5,
-
+                                maxLines: 3,
+                              ),
+                              SizedBox(
+                                height: 16,
                               ),
                               RaisedButton(
                                 child: Text(
