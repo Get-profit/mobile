@@ -6,12 +6,12 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           iconTheme: IconThemeData(
-            color: Colors.white,
+            color: Colors.green,
           ),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         body:
         ListView(
           padding: EdgeInsets.only(top: 80),
@@ -19,15 +19,19 @@ class LoginScreen extends StatelessWidget {
             Center(
                 child: Text("LOGIN",
                     style: TextStyle(
-                        color: Colors.white, fontSize: 35, fontWeight: FontWeight.bold))
+                        color: Colors.green, fontSize: 35, fontWeight: FontWeight.bold))
             ),
             SizedBox(height: 35,),
             Center(
                 child: Container(
                     width: 350,
                     child: Card(
+                      shape:  RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: BorderSide(color: Colors.green),
+                      ),
                       elevation: 0,
-                      color: Colors.black54,
+                      color: Colors.transparent,
                       child: Form(
                           child: Padding(
                             padding: EdgeInsets.all(16),
@@ -36,23 +40,27 @@ class LoginScreen extends StatelessWidget {
                                 SizedBox(height: 20,),
                                 TextFormField(
                                   decoration: InputDecoration(
+                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
                                       hintText: "USUÁRIO",
+                                      hintStyle: TextStyle(color: Colors.green),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide:
-                                          (BorderSide(color: Colors.white)))),
-                                  style: TextStyle(color: Colors.white),
+                                          (BorderSide(color: Colors.green)))),
+                                  style: TextStyle(color: Colors.green),
                                 ),
                                 SizedBox(
                                   height: 16,
                                 ),
                                 TextFormField(
                                   decoration: InputDecoration(
+                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
                                       hintText: "SENHA",
+                                      hintStyle: TextStyle(color: Colors.green),
                                       enabledBorder: UnderlineInputBorder(
                                           borderSide:
-                                          (BorderSide(color: Colors.white)))),
+                                          (BorderSide(color: Colors.green)))),
                                   obscureText: true,
-                                  style: TextStyle(color: Colors.white),
+                                  style: TextStyle(color: Colors.green),
                                 ),
                                 SizedBox(
                                   height: 20,
@@ -62,10 +70,10 @@ class LoginScreen extends StatelessWidget {
                                     "ENTRAR",
                                     style: TextStyle(color: Colors.white,fontSize: 18),
                                   ),
-                                  color: Colors.blue,
+                                  color: Colors.lightGreen,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(8),
-                                      side: BorderSide(color: Colors.blue)),
+                                      side: BorderSide(color: Colors.lightGreen)),
                                   onPressed: (){},
                                 )
                               ],
