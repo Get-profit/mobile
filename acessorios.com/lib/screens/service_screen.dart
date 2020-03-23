@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_profit/screens/cliente_screen.dart';
+import 'package:get_profit/screens/user_screen.dart';
 import 'package:masked_text/masked_text.dart';
+
 
 class ServiceScreen extends StatelessWidget {
   @override
@@ -13,6 +16,44 @@ class ServiceScreen extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
+      ),
+      drawer: Drawer(
+
+        elevation: 1.5,
+        child: Stack(
+          children: <Widget>[
+            ListView(
+              children: <Widget>[
+                ListTile(
+                  leading:  IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
+                  title: Text('CADASTRO USUÁRIOS', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => UsuarioScreen()),
+                    );
+                  },
+                ),
+                Divider(
+                  color: Colors.grey ,
+                  height: 5,
+                ),
+                ListTile(
+                  title: Text('CADASTRO CLIENTES', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                  leading: IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
+                  onTap: (){
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ClienteScreen()),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ],
+        )
       ),
       backgroundColor: Colors.white,
       body:
