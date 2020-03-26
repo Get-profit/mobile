@@ -18,7 +18,6 @@ class ServiceScreen extends StatelessWidget {
         ),
       ),
       drawer: Drawer(
-
         elevation: 1.5,
         child: Stack(
           children: <Widget>[
