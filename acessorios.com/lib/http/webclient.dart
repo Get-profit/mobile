@@ -6,6 +6,7 @@ final Client client = HttpClientWithInterceptor.build(
   interceptors: [LoggingInterceptor()],
 );
 
+const String viaCepUrl = 'https://viacep.com.br/ws/#numerodocepaqui/json/';
 const String baseUrl = '';
 
 
