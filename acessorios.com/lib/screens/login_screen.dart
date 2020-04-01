@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get_profit/components/input.dart';
 
 class LoginScreen extends StatelessWidget {
+
+  TextEditingController _login = TextEditingController();
+  TextEditingController _senha = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,26 +44,16 @@ class LoginScreen extends StatelessWidget {
                               children: <Widget>[
                                 SizedBox(height: 20,),
                                 TextFormField(
-                                  decoration: InputDecoration(
-                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                      hintText: "USUÁRIO",
-                                      hintStyle: TextStyle(color: Colors.green),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          (BorderSide(color: Colors.green)))),
+                                  controller: _login,
+                                  decoration: InputDecorationAcessorios().input("USUÁRIO"),
                                   style: TextStyle(color: Colors.green),
                                 ),
                                 SizedBox(
                                   height: 16,
                                 ),
                                 TextFormField(
-                                  decoration: InputDecoration(
-                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                      hintText: "SENHA",
-                                      hintStyle: TextStyle(color: Colors.green),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          (BorderSide(color: Colors.green)))),
+                                  controller: _senha,
+                                  decoration: InputDecorationAcessorios().input("SENHA"),
                                   obscureText: true,
                                   style: TextStyle(color: Colors.green),
                                 ),

@@ -5,8 +5,9 @@ import 'interceptors/logging_interceptor.dart';
 final Client client = HttpClientWithInterceptor.build(
   interceptors: [LoggingInterceptor()],
 );
-
-const String viaCepUrl = 'https://viacep.com.br/ws/#numerodocepaqui/json/';
-const String baseUrl = '';
+    String returnUrlCep(String cep){
+    return 'https://viacep.com.br/ws/'+cep+'/json/';
+    }
+  const String baseUrl = '';
 
 

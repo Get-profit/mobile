@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get_profit/screens/cliente_screen.dart';
-import 'package:get_profit/screens/user_screen.dart';
-import 'package:masked_text/masked_text.dart';
-
+import 'package:flutter/services.dart';
+import 'package:get_profit/components/input.dart';
+import 'package:get_profit/screens/client/cliente_screen.dart';
+import 'package:get_profit/screens/user/user_screen.dart';
+import 'package:brasil_fields/brasil_fields.dart';
 
 class ServiceScreen extends StatelessWidget {
+
+  TextEditingController _cliente = TextEditingController();
+  TextEditingController _valor = TextEditingController();
+  TextEditingController _marca = TextEditingController();
+  TextEditingController _modelo = TextEditingController();
+  TextEditingController _defeito = TextEditingController();
+  TextEditingController _descricao = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,13 +99,21 @@ class ServiceScreen extends StatelessWidget {
                                 height: 16,
                               ),
                               TextFormField(
-                                  decoration: InputDecoration(
-                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                      hintText: "Valor",
-                                      hintStyle: TextStyle(color: Colors.green),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          (BorderSide(color: Colors.green)))),
+                                controller: _valor,
+                                  decoration:InputDecorationAcessorios().input("VALOR"),
+                                  style: TextStyle(color: Colors.green),
+                                  keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                  RealInputFormatter(),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16,
+                              ),
+                              TextFormField(
+                                controller: _marca,
+                                  decoration:InputDecorationAcessorios().input("MARCA"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
                               ),
@@ -104,13 +121,8 @@ class ServiceScreen extends StatelessWidget {
                                 height: 16,
                               ),
                               TextFormField(
-                                  decoration: InputDecoration(
-                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                      hintText: "Marca",
-                                      hintStyle: TextStyle(color: Colors.green),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          (BorderSide(color: Colors.green)))),
+                                controller: _modelo,
+                                  decoration: InputDecorationAcessorios().input("MODELO"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
                               ),
@@ -118,27 +130,8 @@ class ServiceScreen extends StatelessWidget {
                                 height: 16,
                               ),
                               TextFormField(
-                                  decoration: InputDecoration(
-                                      focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                      hintText: "Modelo",
-                                      hintStyle: TextStyle(color: Colors.green),
-                                      enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          (BorderSide(color: Colors.green)))),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.number
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                    hintText: "Defeito",
-                                    hintStyle: TextStyle(color: Colors.green),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                        (BorderSide(color: Colors.green)))),
+                                controller: _defeito,
+                                decoration: InputDecorationAcessorios().input("DEFEITO"),
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
@@ -147,13 +140,8 @@ class ServiceScreen extends StatelessWidget {
                                 height: 16,
                               ),
                               TextFormField(
-                                decoration: InputDecoration(
-                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                    hintText: "Descrição",
-                                    hintStyle: TextStyle(color: Colors.green),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                        (BorderSide(color: Colors.green)))),
+                                controller: _descricao,
+                                decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
@@ -170,7 +158,8 @@ class ServiceScreen extends StatelessWidget {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: (){},
+                                onPressed: (){
+                                },
                               )
                             ],
                           ),
