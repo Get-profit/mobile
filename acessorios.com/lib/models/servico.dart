@@ -2,7 +2,7 @@ import 'package:get_profit/models/cliente.dart';
 
 class ServicesOrder {
   final int id;
-  final Client idClient;
+  final Cliente idClient;
   final String status;
   final DateTime dataEntrada;
   final String tipo;
@@ -48,7 +48,7 @@ class ServicesOrder {
 
   ServicesOrder.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        idClient = Client.fromJson(json['id']),
+        idClient = Cliente.fromJson(json['id']),
         status = json['status'],
         dataEntrada = json['dataEntrada'],
         tipo = json['tipo'],

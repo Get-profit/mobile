@@ -13,7 +13,7 @@ class ClientList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Clientes'),
       ),
-      body: FutureBuilder<List<Client>>(
+      body: FutureBuilder<List<Cliente>>(
         // future: _webClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {

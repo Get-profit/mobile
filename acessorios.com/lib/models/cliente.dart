@@ -1,4 +1,4 @@
-class Client {
+class Cliente {
   final int id;
   final String nome;
   final String cpf;
@@ -13,7 +13,7 @@ class Client {
   final int numero;
 
 
-  Client(
+  Cliente(
       this.id,
       this.nome,
       this.cpf,
@@ -42,7 +42,7 @@ class Client {
         '}';
   }
 
-  Client.fromJson(Map<String, dynamic> json)
+  Cliente.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         nome = json['nome'],
         cpf = json['cpf'],
