@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get_profit/components/centered_message.dart';
 import 'package:get_profit/components/progress.dart';
+import 'package:get_profit/http/webclients/client_webclient.dart';
 import 'package:get_profit/models/cliente.dart';
 
 class ClientList extends StatelessWidget {
 
-  // final TransactionWebClient _webClient = TransactionWebClient();
+   final ClienteWebClient _webClient = ClienteWebClient();
 
   @override
   Widget build(BuildContext context) {
@@ -25,35 +26,35 @@ class ClientList extends StatelessWidget {
             case ConnectionState.active:
               break;
             case ConnectionState.done:
-//              if(snapshot.hasData){
-//                final List<User> transactions = snapshot.data;
-//                if (transactions.isNotEmpty) {
-//                  return ListView.builder(
-//                    itemBuilder: (context, index) {
-//                      final Client transaction = transactions[index];
-//                      return Card(
-//                        child: ListTile(
-//                          leading: Icon(Icons.monetization_on),
-//                          title: Text(
-//                            transaction.value.toString(),
-//                            style: TextStyle(
-//                              fontSize: 24.0,
-//                              fontWeight: FontWeight.bold,
-//                            ),
-//                          ),
-//                          subtitle: Text(
-//                            transaction.contact.accountNumber.toString(),
-//                            style: TextStyle(
-//                              fontSize: 16.0,
-//                            ),
-//                          ),
-//                        ),
-//                      );
-//                    },
-//                    itemCount: transactions.length,
-//                  );
-//                }
-//              }
+              if(snapshot.hasData){
+                final List<Cliente> clientes = snapshot.data;
+                if (clientes.isNotEmpty) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      final Cliente cliente = clientes[index];
+                      return Card(
+                        child: ListTile(
+                          leading: Icon(Icons.monetization_on),
+                          title: Text(
+                            cliente.nome.toString(),
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          subtitle: Text(
+                            cliente.cpf.toString() +" - " + cliente.telefone.toString(),
+                            style: TextStyle(
+                              fontSize: 16.0,
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                    itemCount: clientes.length,
+                  );
+                }
+              }
               return CenteredMessage(
                 'No transactions found',
                 icon: Icons.warning,
