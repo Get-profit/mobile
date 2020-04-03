@@ -3,14 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get_profit/components/cep_field.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/input.dart';
-class ClienteScreen extends StatefulWidget {
+class ClienteUpdate extends StatefulWidget {
   @override
-  _ClienteScreenState createState() => _ClienteScreenState();
+  _ClienteUpdateState createState() => _ClienteUpdateState();
 }
 
-class _ClienteScreenState extends State<ClienteScreen> {
+class _ClienteUpdateState extends State<ClienteUpdate> {
 
-  TextEditingController _cep = TextEditingController();
   TextEditingController _nome = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _telefone = TextEditingController();
@@ -62,7 +61,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 keyboardType: TextInputType.text,
                               ),
                               TextFormField(
-                                controller: _email,
+                                  controller: _email,
                                   decoration: InputDecorationAcessorios().input("EMAIL"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.emailAddress
@@ -86,17 +85,17 @@ class _ClienteScreenState extends State<ClienteScreen> {
                               ),
                               TextFormField(
                                 controller: _telefone,
-                                  decoration: InputDecorationAcessorios().input("TELEFONE"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.phone,
+                                decoration: InputDecorationAcessorios().input("TELEFONE"),
+                                style: TextStyle(color: Colors.green),
+                                keyboardType: TextInputType.phone,
                                 inputFormatters: [
                                   WhitelistingTextInputFormatter.digitsOnly,
                                   TelefoneInputFormatter(),
                                 ],
                               ),
                               CepField(
-                                decoration: InputDecorationAcessorios().input("CEP"),
-                                style: TextStyle(color: Colors.green)
+                                  decoration: InputDecorationAcessorios().input("CEP"),
+                                  style: TextStyle(color: Colors.green)
                               ),
                               TextFormField(
                                 controller: _numero,
@@ -107,21 +106,43 @@ class _ClienteScreenState extends State<ClienteScreen> {
                               SizedBox(
                                 height: 12,
                               ),
-                              RaisedButton(
-                                child: Text(
-                                  "CADASTRAR",
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
-                                ),
-                                color: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: () async{
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: <Widget>[
+                                  RaisedButton(
+                                    child: Text(
+                                      "Alterar",
+                                      style: TextStyle(color: Colors.white,fontSize: 18),
+                                    ),
+                                    color: Colors.lightGreen,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        side: BorderSide(color: Colors.lightGreen)),
+                                    onPressed: () async{
 
-                                  setState(() {
+                                      setState(() {
 
-                                  });
-                                },
+                                      });
+                                    },
+                                  ),
+                                  RaisedButton(
+                                    child: Text(
+                                      "Exluir",
+                                      style: TextStyle(color: Colors.white,fontSize: 18),
+                                    ),
+                                    color: Colors.lightGreen,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        side: BorderSide(color: Colors.lightGreen)),
+                                    onPressed: () async{
+
+                                      setState(() {
+
+                                      });
+                                    },
+                                  ),
+                                ],
                               )
                             ],
                           ),
