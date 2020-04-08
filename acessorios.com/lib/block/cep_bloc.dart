@@ -3,6 +3,7 @@ import 'package:get_profit/http/api_postalcode.dart';
 import 'package:get_profit/http/webclients/api_response.dart';
 import 'package:get_profit/models/address.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:get_profit/screens/client/cliente_screen.dart';
 
 
 enum CepFieldState{INITIALIZING,INCOMPLETE,INVALID, VALID}
@@ -10,7 +11,6 @@ enum CepFieldState{INITIALIZING,INCOMPLETE,INVALID, VALID}
 class CepBlocState{
 
   CepBlocState({this.cepFieldState,this.cep,this.address});
-
   CepFieldState cepFieldState;
   String cep;
   Address address;

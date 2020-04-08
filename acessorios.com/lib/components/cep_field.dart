@@ -3,6 +3,7 @@ import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/services.dart';
 import 'package:get_profit/block/cep_bloc.dart';
 import 'package:get_profit/models/address.dart';
+import 'package:get_profit/screens/client/cliente_screen.dart';
 
 class CepField extends StatefulWidget {
 
@@ -58,6 +59,7 @@ class _CepFieldState extends State<CepField> {
                   CepInputFormatter(),
                 ],
                 onSaved: (c) {
+                  print(snapshot.data.address);
                   onSaved(snapshot.data.address);
                 },
                 onChanged: cepBloc.onChanged,
@@ -104,6 +106,7 @@ class _CepFieldState extends State<CepField> {
         break;
       case CepFieldState.VALID:
         final _address = blocState.address;
+        ClienteScreen(address: _address);
         return Container(
           height: 50,
           padding: const EdgeInsets.all(8),

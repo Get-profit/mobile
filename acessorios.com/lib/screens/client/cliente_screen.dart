@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_profit/block/cep_bloc.dart';
 import 'package:get_profit/components/cep_field.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/input.dart';
+import 'package:get_profit/http/api_postalcode.dart';
+import 'package:get_profit/models/address.dart';
+
 class ClienteScreen extends StatefulWidget {
+
+  ClienteScreen({this.address});
+  final Address address;
   @override
   _ClienteScreenState createState() => _ClienteScreenState();
 }
 
 class _ClienteScreenState extends State<ClienteScreen> {
 
-  TextEditingController _cep = TextEditingController();
+  Address get address => widget.address;
   TextEditingController _nome = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _telefone = TextEditingController();
@@ -19,10 +26,10 @@ class _ClienteScreenState extends State<ClienteScreen> {
   TextEditingController _numero = TextEditingController();
 
 
-
-
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text("CADASTRO CLIENTES", style: TextStyle(color: Colors.white),),
@@ -76,7 +83,6 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   CpfInputFormatter(),
                                 ],
                                 keyboardType: TextInputType.number,
-
                               ),
                               TextFormField(
                                 controller: _rg,
@@ -96,7 +102,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                               ),
                               CepField(
                                 decoration: InputDecorationAcessorios().input("CEP"),
-                                style: TextStyle(color: Colors.green)
+                                style: TextStyle(color: Colors.green),
                               ),
                               TextFormField(
                                 controller: _numero,
@@ -117,9 +123,8 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                     borderRadius: BorderRadius.circular(8),
                                     side: BorderSide(color: Colors.lightGreen)),
                                 onPressed: () async{
-
                                   setState(() {
-
+                                      print(address);
                                   });
                                 },
                               )
@@ -133,6 +138,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
     );
   }
 }
+
 
 
 

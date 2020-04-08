@@ -22,72 +22,74 @@ class UsuarioScreen extends StatelessWidget {
       ),
       backgroundColor: Colors.white,
       body:
-      ListView(
-        padding: EdgeInsets.only(top: 20),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(height: 35,),
-          Center(
-              child: Container(
-                  width: 350,
-                  child: Card(
-                    shape:  RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.green),
-                    ),
-                    elevation: 0,
-                    color: Colors.transparent,
-                    child: Form(
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(height: 12,),
-                              TextFormField(
-                                controller: _login,
-                                decoration: InputDecorationAcessorios().input("LOGIN"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.text
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              TextFormField(
-                                controller: _senha,
-                                  decoration: InputDecorationAcessorios().input("SENHA"),
-                                  obscureText: true,
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.text
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              TextFormField(
-                                controller: _cargo,
-                                  decoration: InputDecorationAcessorios().input("CARGO"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.text
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              RaisedButton(
-                                child: Text(
-                                  "CADASTRAR",
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
-                                ),
-                                color: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: (){},
-                              )
-                            ],
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.only(top: 150),
+              children: <Widget>[
+                SizedBox(height: 35,),
+                Center(
+                    child: Container(
+                        width: 350,
+                        child: Card(
+                          shape:  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            side: BorderSide(color: Colors.green),
                           ),
-                        )),
-                  ))
-          ),
+                          elevation: 0,
+                          color: Colors.transparent,
+                          child: Form(
+                              child: Padding(
+                                padding: EdgeInsets.all(16),
+                                child: Column(
+                                  children: <Widget>[
+                                    SizedBox(height: 12,),
+                                    TextFormField(
+                                        controller: _login,
+                                        decoration: InputDecorationAcessorios().input("LOGIN"),
+                                        style: TextStyle(color: Colors.green),
+                                        keyboardType: TextInputType.text
+                                    ),
+                                    TextFormField(
+                                        controller: _senha,
+                                        decoration: InputDecorationAcessorios().input("SENHA"),
+                                        obscureText: true,
+                                        style: TextStyle(color: Colors.green),
+                                        keyboardType: TextInputType.text
+                                    ),
+                                    TextFormField(
+                                        controller: _cargo,
+                                        decoration: InputDecorationAcessorios().input("CARGO"),
+                                        style: TextStyle(color: Colors.green),
+                                        keyboardType: TextInputType.text
+                                    ),
+                                    SizedBox(
+                                      height: 20,
+                                    ),
+                                    RaisedButton(
+                                      child: Text(
+                                        "CADASTRAR",
+                                        style: TextStyle(color: Colors.white,fontSize: 18),
+                                      ),
+                                      color: Colors.lightGreen,
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(8),
+                                          side: BorderSide(color: Colors.lightGreen)),
+                                      onPressed: (){},
+                                    )
+                                  ],
+                                ),
+                              )),
+                        ))
+                ),
+              ],
+            ),
+          )
         ],
-      ),
+      )
+     ,
     );
   }
 }

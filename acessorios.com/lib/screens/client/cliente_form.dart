@@ -128,7 +128,7 @@ class _ClienteUpdateState extends State<ClienteUpdate> {
                                   ),
                                   RaisedButton(
                                     child: Text(
-                                      "Exluir",
+                                      "Excluir",
                                       style: TextStyle(color: Colors.white,fontSize: 18),
                                     ),
                                     color: Colors.lightGreen,

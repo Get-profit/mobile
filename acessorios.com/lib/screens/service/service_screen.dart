@@ -95,9 +95,6 @@ class ServiceScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.text,
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _valor,
                                   decoration:InputDecorationAcessorios().input("VALOR"),
@@ -108,26 +105,17 @@ class ServiceScreen extends StatelessWidget {
                                   RealInputFormatter(),
                                 ],
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _marca,
                                   decoration:InputDecorationAcessorios().input("MARCA"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _modelo,
                                   decoration: InputDecorationAcessorios().input("MODELO"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
-                              ),
-                              SizedBox(
-                                height: 16,
                               ),
                               TextFormField(
                                 controller: _defeito,
@@ -136,18 +124,12 @@ class ServiceScreen extends StatelessWidget {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _descricao,
                                 decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
-                              ),
-                              SizedBox(
-                                height: 16,
                               ),
                               RaisedButton(
                                 child: Text(

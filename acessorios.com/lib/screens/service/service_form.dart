@@ -100,9 +100,6 @@ class _ServiceUpdateState extends State<ServiceUpdate> {
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.text,
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _valor,
                                 decoration:InputDecorationAcessorios().input("VALOR"),
@@ -113,26 +110,17 @@ class _ServiceUpdateState extends State<ServiceUpdate> {
                                   RealInputFormatter(),
                                 ],
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                   controller: _marca,
                                   decoration:InputDecorationAcessorios().input("MARCA"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                   controller: _modelo,
                                   decoration: InputDecorationAcessorios().input("MODELO"),
                                   style: TextStyle(color: Colors.green),
                                   keyboardType: TextInputType.number
-                              ),
-                              SizedBox(
-                                height: 16,
                               ),
                               TextFormField(
                                 controller: _defeito,
@@ -141,9 +129,6 @@ class _ServiceUpdateState extends State<ServiceUpdate> {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
                               ),
-                              SizedBox(
-                                height: 16,
-                              ),
                               TextFormField(
                                 controller: _descricao,
                                 decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
@@ -151,8 +136,9 @@ class _ServiceUpdateState extends State<ServiceUpdate> {
                                 keyboardType: TextInputType.multiline,
                                 maxLines: 3,
                               ),
+
                               SizedBox(
-                                height: 16,
+                                height: 12,
                               ),
                               Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
