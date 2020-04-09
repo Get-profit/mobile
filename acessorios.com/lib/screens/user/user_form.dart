@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_profit/block/field_state.dart';
+import 'package:get_profit/block/user/user_bloc.dart';
 import 'package:get_profit/components/input.dart';
 
 class UsuarioUpdate extends StatelessWidget {
@@ -7,7 +9,7 @@ class UsuarioUpdate extends StatelessWidget {
   TextEditingController _senha = TextEditingController();
   TextEditingController _cargo = TextEditingController();
 
-
+  UserBloc _userBloc = UserBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,24 +48,49 @@ class UsuarioUpdate extends StatelessWidget {
                                 child: Column(
                                   children: <Widget>[
                                     SizedBox(height: 12,),
-                                    TextFormField(
-                                        controller: _login,
-                                        decoration: InputDecorationAcessorios().input("LOGIN"),
-                                        style: TextStyle(color: Colors.green),
-                                        keyboardType: TextInputType.text
+                                    StreamBuilder<FieldState>(
+                                        stream: _userBloc.outLogin,
+                                        initialData: FieldState(),
+                                        builder: (context, snapshot) {
+                                          return TextFormField(
+                                            controller: _login,
+                                            decoration: InputDecorationAcessorios().input("LOGIN",snapshot.data.error),
+                                            style: TextStyle(color: Colors.green),
+                                            keyboardType: TextInputType.text,
+                                            onChanged: _userBloc.changeLogin,
+                                            enabled: snapshot.data.enabled,
+                                          );
+                                        }
+
                                     ),
-                                    TextFormField(
-                                        controller: _senha,
-                                        decoration: InputDecorationAcessorios().input("SENHA"),
-                                        obscureText: true,
-                                        style: TextStyle(color: Colors.green),
-                                        keyboardType: TextInputType.text
+                                    StreamBuilder<FieldState>(
+                                        stream: _userBloc.outPassword,
+                                        initialData: FieldState(),
+                                        builder: (context, snapshot) {
+                                          return TextFormField(
+                                            controller: _senha,
+                                            decoration: InputDecorationAcessorios().input("SENHA",snapshot.data.error),
+                                            obscureText: true,
+                                            style: TextStyle(color: Colors.green),
+                                            keyboardType: TextInputType.text,
+                                            onChanged: _userBloc.changePassword,
+                                            enabled: snapshot.data.enabled,
+                                          );
+                                        }
                                     ),
-                                    TextFormField(
-                                        controller: _cargo,
-                                        decoration: InputDecorationAcessorios().input("CARGO"),
-                                        style: TextStyle(color: Colors.green),
-                                        keyboardType: TextInputType.text
+                                    StreamBuilder<FieldState>(
+                                        stream: _userBloc.outCargo,
+                                        initialData: FieldState(),
+                                        builder: (context, snapshot) {
+                                          return TextFormField(
+                                            controller: _cargo,
+                                            decoration: InputDecorationAcessorios().input("CARGO",snapshot.data.error),
+                                            style: TextStyle(color: Colors.green),
+                                            keyboardType: TextInputType.text,
+                                            onChanged: _userBloc.changeCargo,
+                                            enabled: snapshot.data.enabled,
+                                          );
+                                        }
                                     ),
                                     SizedBox(
                                       height: 20,

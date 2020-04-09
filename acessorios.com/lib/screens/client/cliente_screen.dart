@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_profit/block/cep_bloc.dart';
+import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/components/cep_field.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/input.dart';
@@ -62,53 +63,90 @@ class _ClienteScreenState extends State<ClienteScreen> {
                           child: Column(
                             children: <Widget>[
                               SizedBox(height: 12,),
-                              TextFormField(
-                                controller: _nome,
-                                decoration: InputDecorationAcessorios().input("NOME"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.text,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _nome,
+                                    decoration: InputDecorationAcessorios().input("NOME",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.text,
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _email,
-                                  decoration: InputDecorationAcessorios().input("EMAIL"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.emailAddress
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _email,
+                                      decoration: InputDecorationAcessorios().input("EMAIL",snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.emailAddress
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _cpf,
-                                decoration: InputDecorationAcessorios().input("CPF"),
-                                style: TextStyle(color: Colors.green),
-                                inputFormatters: [
-                                  WhitelistingTextInputFormatter.digitsOnly,
-                                  CpfInputFormatter(),
-                                ],
-                                keyboardType: TextInputType.number,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _cpf,
+                                    decoration: InputDecorationAcessorios().input("CPF",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    inputFormatters: [
+                                      WhitelistingTextInputFormatter.digitsOnly,
+                                      CpfInputFormatter(),
+                                    ],
+                                    keyboardType: TextInputType.number,
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _rg,
-                                decoration: InputDecorationAcessorios().input("RG"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.number,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _rg,
+                                    decoration: InputDecorationAcessorios().input("RG",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.number,
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _telefone,
-                                  decoration: InputDecorationAcessorios().input("TELEFONE"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.phone,
-                                inputFormatters: [
-                                  WhitelistingTextInputFormatter.digitsOnly,
-                                  TelefoneInputFormatter(),
-                                ],
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _telefone,
+                                      decoration: InputDecorationAcessorios().input("TELEFONE",snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.phone,
+                                    inputFormatters: [
+                                      WhitelistingTextInputFormatter.digitsOnly,
+                                      TelefoneInputFormatter(),
+                                    ],
+                                  );
+                                }
                               ),
                               CepField(
-                                decoration: InputDecorationAcessorios().input("CEP"),
+                                decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
+                                    hintText: "CEP",
+                                    hintStyle: TextStyle(color: Colors.green),
+                                    enabledBorder: UnderlineInputBorder(
+                                        borderSide:
+                                        (BorderSide(color: Colors.green))),
+                                ),
                                 style: TextStyle(color: Colors.green),
                               ),
-                              TextFormField(
-                                controller: _numero,
-                                decoration: InputDecorationAcessorios().input("NÚMERO"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.number,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _numero,
+                                    decoration: InputDecorationAcessorios().input("NÚMERO",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.number,
+                                  );
+                                }
                               ),
                               SizedBox(
                                 height: 12,
@@ -124,7 +162,6 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                     side: BorderSide(color: Colors.lightGreen)),
                                 onPressed: () async{
                                   setState(() {
-                                      print(address);
                                   });
                                 },
                               )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/components/input.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
@@ -95,41 +96,66 @@ class ServiceScreen extends StatelessWidget {
                                 style: TextStyle(color: Colors.green),
                                 keyboardType: TextInputType.text,
                               ),
-                              TextFormField(
-                                controller: _valor,
-                                  decoration:InputDecorationAcessorios().input("VALOR"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.number,
-                                inputFormatters: [
-                                  WhitelistingTextInputFormatter.digitsOnly,
-                                  RealInputFormatter(),
-                                ],
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _valor,
+                                      decoration:InputDecorationAcessorios().input("VALOR",snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number,
+                                    inputFormatters: [
+                                      WhitelistingTextInputFormatter.digitsOnly,
+                                      RealInputFormatter(),
+                                    ],
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _marca,
-                                  decoration:InputDecorationAcessorios().input("MARCA"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.number
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _marca,
+                                      decoration:InputDecorationAcessorios().input("MARCA",snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _modelo,
-                                  decoration: InputDecorationAcessorios().input("MODELO"),
-                                  style: TextStyle(color: Colors.green),
-                                  keyboardType: TextInputType.number
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _modelo,
+                                      decoration: InputDecorationAcessorios().input("MODELO",snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _defeito,
-                                decoration: InputDecorationAcessorios().input("DEFEITO"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.multiline,
-                                maxLines: 3,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _defeito,
+                                    decoration: InputDecorationAcessorios().input("DEFEITO",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: 3,
+                                  );
+                                }
                               ),
-                              TextFormField(
-                                controller: _descricao,
-                                decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.multiline,
-                                maxLines: 3,
+                              StreamBuilder<FieldState>(
+                                stream: null,
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    controller: _descricao,
+                                    decoration: InputDecorationAcessorios().input("DESCRIÇÃO",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: 3,
+                                  );
+                                }
                               ),
                               RaisedButton(
                                 child: Text(
