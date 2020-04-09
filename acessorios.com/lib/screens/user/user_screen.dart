@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/block/user/user_bloc.dart';
 import 'package:get_profit/components/input.dart';
+import 'package:get_profit/components/user_button.dart';
+import 'package:get_profit/models/usuario.dart';
 
 class UsuarioScreen extends StatelessWidget {
 
+  UsuarioScreen({this.user});
+  User user;
   TextEditingController _login = TextEditingController();
   TextEditingController _senha = TextEditingController();
   TextEditingController _cargo = TextEditingController();
@@ -15,7 +19,7 @@ class UsuarioScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CADASTRO USUÁRIOS", style: TextStyle(color: Colors.white),),
+        title: Text(user == null ? "CADASTRO USUÁRIOS" : "ALTERAÇÃO USUÁRIOS", style: TextStyle(color: Colors.white),),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.green,
@@ -27,6 +31,7 @@ class UsuarioScreen extends StatelessWidget {
       body:
       Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Expanded(
             child: ListView(
@@ -54,6 +59,7 @@ class UsuarioScreen extends StatelessWidget {
                                         initialData: FieldState(),
                                         builder: (context, snapshot) {
                                           return TextFormField(
+                                            autocorrect: false,
                                             controller: _login,
                                             decoration: InputDecorationAcessorios().input("LOGIN",snapshot.data.error),
                                             style: TextStyle(color: Colors.green),
@@ -64,11 +70,15 @@ class UsuarioScreen extends StatelessWidget {
                                         }
 
                                     ),
+                                    SizedBox(
+                                      height: 16,
+                                    ),
                                     StreamBuilder<FieldState>(
                                         stream: _userBloc.outPassword,
                                         initialData: FieldState(),
                                         builder: (context, snapshot) {
                                           return TextFormField(
+                                            autocorrect: false,
                                             controller: _senha,
                                             decoration: InputDecorationAcessorios().input("SENHA",snapshot.data.error),
                                             obscureText: true,
@@ -78,6 +88,9 @@ class UsuarioScreen extends StatelessWidget {
                                             enabled: snapshot.data.enabled,
                                           );
                                         }
+                                    ),
+                                    SizedBox(
+                                      height: 16,
                                     ),
                                     StreamBuilder<FieldState>(
                                         stream: _userBloc.outCargo,
@@ -96,6 +109,7 @@ class UsuarioScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 20,
                                     ),
+                                    UserButton(_userBloc)
                                   ],
                                 ),
                               )),

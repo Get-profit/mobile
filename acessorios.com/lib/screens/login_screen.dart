@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/block/login/login_bloc.dart';
 import 'package:get_profit/components/input.dart';
+import 'package:get_profit/components/login_button.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -85,17 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(
                                 height: 20,
                               ),
-                              RaisedButton(
-                                child: Text(
-                                  "ENTRAR",
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
-                                ),
-                                color: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: (){},
-                              )
+                              LoginButton(_loginBloc)
                             ],
                           ),
                         )),
