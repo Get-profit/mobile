@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_profit/block/cep_bloc.dart';
+import 'package:get_profit/block/client/client_bloc.dart';
 import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/components/cep_field.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:get_profit/components/client_button.dart';
 import 'package:get_profit/components/input.dart';
 import 'package:get_profit/http/api_postalcode.dart';
 import 'package:get_profit/models/address.dart';
+import 'package:get_profit/models/cliente.dart';
 
 class ClienteScreen extends StatefulWidget {
 
-  ClienteScreen({this.address});
-  final Address address;
+  ClienteScreen({this.cliente});
+  final Cliente cliente;
   @override
   _ClienteScreenState createState() => _ClienteScreenState();
 }
 
 class _ClienteScreenState extends State<ClienteScreen> {
 
-  Address get address => widget.address;
+  ClientBloc _clientBloc = ClientBloc();
+  Cliente get cliente => widget.cliente;
   TextEditingController _nome = TextEditingController();
   TextEditingController _email = TextEditingController();
   TextEditingController _telefone = TextEditingController();
@@ -26,14 +30,12 @@ class _ClienteScreenState extends State<ClienteScreen> {
   TextEditingController _rg = TextEditingController();
   TextEditingController _numero = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
       appBar: AppBar(
-        title: Text("CADASTRO CLIENTES", style: TextStyle(color: Colors.white),),
+        title: Text(cliente == null ? "CADASTRO CLIENTES" : "ALTERAÇÃO CLIENTES", style: TextStyle(color: Colors.white),),
         centerTitle: true,
         elevation: 0,
         backgroundColor: Colors.green,
@@ -64,65 +66,81 @@ class _ClienteScreenState extends State<ClienteScreen> {
                             children: <Widget>[
                               SizedBox(height: 12,),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outNome,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _nome,
-                                    decoration: InputDecorationAcessorios().input("NOME",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NOME" : cliente.nome,snapshot.data.error),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.text,
+                                    onChanged: _clientBloc.changeNome,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outEmail,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _email,
-                                      decoration: InputDecorationAcessorios().input("EMAIL",snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "EMAIL" : cliente.email,snapshot.data.error),
                                       style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.emailAddress
+                                      keyboardType: TextInputType.emailAddress,
+                                    onChanged: _clientBloc.changeEmail,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outCPF,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _cpf,
-                                    decoration: InputDecorationAcessorios().input("CPF",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "CPF" : cliente.cpf,snapshot.data.error),
                                     style: TextStyle(color: Colors.green),
                                     inputFormatters: [
                                       WhitelistingTextInputFormatter.digitsOnly,
                                       CpfInputFormatter(),
                                     ],
                                     keyboardType: TextInputType.number,
+                                    onChanged: _clientBloc.changeCPF,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outRG,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _rg,
-                                    decoration: InputDecorationAcessorios().input("RG",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "RG" : cliente.rg,snapshot.data.error),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.number,
+                                    onChanged: _clientBloc.changeRG,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outTelefone,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _telefone,
-                                      decoration: InputDecorationAcessorios().input("TELEFONE",snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "TELEFONE" : cliente.telefone,snapshot.data.error),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.phone,
                                     inputFormatters: [
                                       WhitelistingTextInputFormatter.digitsOnly,
                                       TelefoneInputFormatter(),
+
                                     ],
+                                    onChanged: _clientBloc.changeTelefone,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
@@ -138,33 +156,23 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 style: TextStyle(color: Colors.green),
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _clientBloc.outNumero,
+                                initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _numero,
-                                    decoration: InputDecorationAcessorios().input("NÚMERO",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NÚMERO" : cliente.numero,snapshot.data.error),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.number,
+                                    onChanged: _clientBloc.changeNumero,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               SizedBox(
                                 height: 12,
                               ),
-                              RaisedButton(
-                                child: Text(
-                                  "CADASTRAR",
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
-                                ),
-                                color: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: () async{
-                                  setState(() {
-                                  });
-                                },
-                              )
+                              ClientButton(_clientBloc,cliente)
                             ],
                           ),
                         )),

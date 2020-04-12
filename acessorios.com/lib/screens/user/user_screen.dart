@@ -8,10 +8,11 @@ import 'package:get_profit/models/usuario.dart';
 class UsuarioScreen extends StatelessWidget {
 
   UsuarioScreen({this.user});
-  User user;
+  final User user;
   TextEditingController _login = TextEditingController();
   TextEditingController _senha = TextEditingController();
   TextEditingController _cargo = TextEditingController();
+  TextEditingController _cep = TextEditingController();
 
   UserBloc _userBloc = UserBloc();
 
@@ -61,7 +62,7 @@ class UsuarioScreen extends StatelessWidget {
                                           return TextFormField(
                                             autocorrect: false,
                                             controller: _login,
-                                            decoration: InputDecorationAcessorios().input("LOGIN",snapshot.data.error),
+                                            decoration: InputDecorationAcessorios().input(user == null ? "LOGIN" : user.apelido,snapshot.data.error),
                                             style: TextStyle(color: Colors.green),
                                             keyboardType: TextInputType.text,
                                             onChanged: _userBloc.changeLogin,
@@ -80,8 +81,8 @@ class UsuarioScreen extends StatelessWidget {
                                           return TextFormField(
                                             autocorrect: false,
                                             controller: _senha,
-                                            decoration: InputDecorationAcessorios().input("SENHA",snapshot.data.error),
-                                            obscureText: true,
+                                            decoration: InputDecorationAcessorios().input(user == null ? "SENHA" : user.senha,snapshot.data.error),
+                                            obscureText: user == null ? true : false,
                                             style: TextStyle(color: Colors.green),
                                             keyboardType: TextInputType.text,
                                             onChanged: _userBloc.changePassword,
@@ -98,7 +99,7 @@ class UsuarioScreen extends StatelessWidget {
                                         builder: (context, snapshot) {
                                           return TextFormField(
                                             controller: _cargo,
-                                            decoration: InputDecorationAcessorios().input("CARGO",snapshot.data.error),
+                                            decoration: InputDecorationAcessorios().input(user == null ? "CARGO" : user.cargo,snapshot.data.error),
                                             style: TextStyle(color: Colors.green),
                                             keyboardType: TextInputType.text,
                                             onChanged: _userBloc.changeCargo,
@@ -109,7 +110,7 @@ class UsuarioScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    UserButton(_userBloc)
+                                    UserButton(_userBloc,user)
                                   ],
                                 ),
                               )),

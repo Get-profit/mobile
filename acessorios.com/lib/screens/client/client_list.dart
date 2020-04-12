@@ -3,6 +3,7 @@ import 'package:get_profit/components/centered_message.dart';
 import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/http/webclients/client_webclient.dart';
 import 'package:get_profit/models/cliente.dart';
+import 'package:get_profit/screens/client/cliente_screen.dart';
 
 class ClientList extends StatelessWidget {
 
@@ -15,7 +16,7 @@ class ClientList extends StatelessWidget {
         title: Text('Clientes'),
       ),
       body: FutureBuilder<List<Cliente>>(
-        // future: _webClient.findAll(),
+         future: _webClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -48,6 +49,13 @@ class ClientList extends StatelessWidget {
                               fontSize: 16.0,
                             ),
                           ),
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ClienteScreen(cliente: cliente,),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
@@ -56,7 +64,7 @@ class ClientList extends StatelessWidget {
                 }
               }
               return CenteredMessage(
-                'No transactions found',
+                'Nenhum Cliente foi Encontrado!',
                 icon: Icons.warning,
               );
               break;
@@ -64,6 +72,19 @@ class ClientList extends StatelessWidget {
 
           return CenteredMessage('Unknown error');
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ClienteScreen(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }

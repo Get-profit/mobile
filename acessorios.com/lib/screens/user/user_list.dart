@@ -3,6 +3,7 @@ import 'package:get_profit/components/centered_message.dart';
 import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/http/webclients/user_webclient.dart';
 import 'package:get_profit/models/usuario.dart';
+import 'package:get_profit/screens/user/user_screen.dart';
 
 class UserList extends StatelessWidget {
 
@@ -12,7 +13,9 @@ class UserList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Usuários'),
+        title: Text('USUÁRIOS',style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        backgroundColor: Colors.green,
       ),
       body: FutureBuilder<List<User>>(
         future: _webClient.findAll(),
@@ -48,6 +51,13 @@ class UserList extends StatelessWidget {
                               fontSize: 16.0,
                             ),
                           ),
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => UsuarioScreen(user: user,),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
@@ -64,6 +74,19 @@ class UserList extends StatelessWidget {
 
           return CenteredMessage('Unknown error');
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => UsuarioScreen(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }

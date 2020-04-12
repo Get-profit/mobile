@@ -19,7 +19,6 @@ class UserWebClient {
     final Response response = await client.post(userUrl,
         headers: {
           'Content-type': 'application/json',
-          'password': '1000',
         },
         body: userJson);
 

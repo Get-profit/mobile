@@ -1,7 +1,11 @@
 import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/block/user/user_bloc_state.dart';
+import 'package:get_profit/http/webclients/client_webclient.dart';
+import 'package:get_profit/http/webclients/user_webclient.dart';
+import 'package:get_profit/models/usuario.dart';
 import 'package:get_profit/validators/user_validator.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:flutter/material.dart';
 import 'package:get_profit/block/button_state.dart';
 
 class UserBloc with UserValidator{
@@ -40,13 +44,24 @@ class UserBloc with UserValidator{
   }
   );
 
+  UserWebClient _webClient = UserWebClient();
 
-
-  void save() async{
+  void save(User user) async{
     _stateController.add(UserBlocState(UserState.LOADING));
     await Future.delayed(Duration(seconds: 3));
-    //LINHA PARA SALVAR O CODIGO QUADNO API ESTIVAR ONLINE--- COLOCAR AQUI
-    _stateController.add(UserBlocState(UserState.DONE));
+    if(user == null){
+      _webClient.save(user).then((users) {
+        if(users != null){
+          _stateController.add(UserBlocState(UserState.DONE));
+        }else{
+          _stateController.add(UserBlocState(UserState.ERROR));
+        }
+      });
+    }else{
+      //COLOCAR AQUI METODO ALTERAR
+      _stateController.add(UserBlocState(UserState.DONE));
+    }
+
   }
 
   void dispose(){
