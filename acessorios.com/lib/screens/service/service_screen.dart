@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_profit/block/field_state.dart';
+import 'package:get_profit/block/service/service_bloc.dart';
 import 'package:get_profit/components/input.dart';
+import 'package:get_profit/components/service_button.dart';
+import 'package:get_profit/models/servico.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 
 class ServiceScreen extends StatelessWidget {
 
+  ServiceScreen({this.servico});
+  final ServicesOrder servico;
   TextEditingController _cliente = TextEditingController();
   TextEditingController _valor = TextEditingController();
   TextEditingController _marca = TextEditingController();
   TextEditingController _modelo = TextEditingController();
   TextEditingController _defeito = TextEditingController();
   TextEditingController _descricao = TextEditingController();
+  ServiceOrderBloc _serviceBloc = ServiceOrderBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -26,43 +32,6 @@ class ServiceScreen extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
-      ),
-      drawer: Drawer(
-        elevation: 1.5,
-        child: Stack(
-          children: <Widget>[
-            ListView(
-              children: <Widget>[
-                ListTile(
-                  leading:  IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
-                  title: Text('CADASTRO USUÁRIOS', style: TextStyle(color: Colors.grey, fontSize: 15),),
-                  onTap: (){
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => UsuarioScreen()),
-                    );
-                  },
-                ),
-                Divider(
-                  color: Colors.grey ,
-                  height: 5,
-                ),
-                ListTile(
-                  title: Text('CADASTRO CLIENTES', style: TextStyle(color: Colors.grey, fontSize: 15),),
-                  leading: IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
-                  onTap: (){
-                    Navigator.pop(context);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ClienteScreen()),
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
-        )
       ),
       backgroundColor: Colors.white,
       body:
@@ -85,19 +54,22 @@ class ServiceScreen extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               SizedBox(height: 12,),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                    hintText: "Cliente",
-                                    hintStyle: TextStyle(color: Colors.green),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                        (BorderSide(color: Colors.green)))),
-                                style: TextStyle(color: Colors.green),
-                                keyboardType: TextInputType.text,
+                              StreamBuilder<FieldState>(
+                                stream: _serviceBloc.outCliente,
+                                initialData: FieldState(),
+                                builder: (context, snapshot) {
+                                  return TextFormField(
+                                    decoration:InputDecorationAcessorios().input("NOME",snapshot.data.error),
+                                    style: TextStyle(color: Colors.green),
+                                    keyboardType: TextInputType.text,
+                                    onChanged: _serviceBloc.changeCliente,
+                                    enabled: snapshot.data.enabled,
+                                  );
+                                }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _serviceBloc.outValor,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _valor,
@@ -108,33 +80,42 @@ class ServiceScreen extends StatelessWidget {
                                       WhitelistingTextInputFormatter.digitsOnly,
                                       RealInputFormatter(),
                                     ],
+                                    onChanged: _serviceBloc.changeValor,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _serviceBloc.outMarca,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _marca,
                                       decoration:InputDecorationAcessorios().input("MARCA",snapshot.data.error),
                                       style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.number
+                                      keyboardType: TextInputType.number,
+                                    onChanged: _serviceBloc.changeMarca,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _serviceBloc.outModelo,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _modelo,
                                       decoration: InputDecorationAcessorios().input("MODELO",snapshot.data.error),
                                       style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.number
+                                      keyboardType: TextInputType.number,
+                                      onChanged: _serviceBloc.changeModelo,
+                                      enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _serviceBloc.outDefeito,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _defeito,
@@ -142,11 +123,14 @@ class ServiceScreen extends StatelessWidget {
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.multiline,
                                     maxLines: 3,
+                                    onChanged: _serviceBloc.changeDefeito,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
                               StreamBuilder<FieldState>(
-                                stream: null,
+                                stream: _serviceBloc.outDescricao,
+                                  initialData: FieldState(),
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _descricao,
@@ -154,21 +138,12 @@ class ServiceScreen extends StatelessWidget {
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.multiline,
                                     maxLines: 3,
+                                    onChanged: _serviceBloc.changeDescricao,
+                                    enabled: snapshot.data.enabled,
                                   );
                                 }
                               ),
-                              RaisedButton(
-                                child: Text(
-                                  "CADASTRAR",
-                                  style: TextStyle(color: Colors.white,fontSize: 18),
-                                ),
-                                color: Colors.lightGreen,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),
-                                    side: BorderSide(color: Colors.lightGreen)),
-                                onPressed: (){
-                                },
-                              )
+                              ServiceOrderButton(_serviceBloc,servico)
                             ],
                           ),
                         )),

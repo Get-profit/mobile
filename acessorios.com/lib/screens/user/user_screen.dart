@@ -12,7 +12,6 @@ class UsuarioScreen extends StatelessWidget {
   TextEditingController _login = TextEditingController();
   TextEditingController _senha = TextEditingController();
   TextEditingController _cargo = TextEditingController();
-  TextEditingController _cep = TextEditingController();
 
   UserBloc _userBloc = UserBloc();
 

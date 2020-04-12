@@ -21,7 +21,6 @@ class ServiceOrderWebClient {
     final Response response = await client.post(serviceOrderUrl,
         headers: {
           'Content-type': 'application/json',
-          'password': '1000',
         },
         body: serviceJson);
 

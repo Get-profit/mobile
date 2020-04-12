@@ -3,6 +3,9 @@ import 'package:get_profit/components/centered_message.dart';
 import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/http/webclients/service_webclient.dart';
 import 'package:get_profit/models/servico.dart';
+import 'package:get_profit/screens/client/cliente_screen.dart';
+import 'package:get_profit/screens/service/service_screen.dart';
+import 'package:get_profit/screens/user/user_screen.dart';
 
 class ServiceList extends StatelessWidget {
 
@@ -12,7 +15,46 @@ class ServiceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Serviços'),
+        title: Text('SERVIÇOS', style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        backgroundColor: Colors.green,
+      ),
+      drawer: Drawer(
+          elevation: 1.5,
+          child: Stack(
+            children: <Widget>[
+              ListView(
+                children: <Widget>[
+                  ListTile(
+                    leading:  IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
+                    title: Text('CADASTRO USUÁRIOS', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                    onTap: (){
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => UsuarioScreen()),
+                      );
+                    },
+                  ),
+                  Divider(
+                    color: Colors.grey ,
+                    height: 5,
+                  ),
+                  ListTile(
+                    title: Text('CADASTRO CLIENTES', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                    leading: IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
+                    onTap: (){
+                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ClienteScreen()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          )
       ),
       body: FutureBuilder<List<ServicesOrder>>(
          future: _webClient.findAll(),
@@ -48,6 +90,13 @@ class ServiceList extends StatelessWidget {
                               fontSize: 16.0,
                             ),
                           ),
+                          onTap: (){
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ServiceScreen(servico: servico,),
+                              ),
+                            );
+                          },
                         ),
                       );
                     },
@@ -64,6 +113,19 @@ class ServiceList extends StatelessWidget {
 
           return CenteredMessage('Unknown error');
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.green,
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => ServiceScreen(),
+            ),
+          );
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
     );
   }

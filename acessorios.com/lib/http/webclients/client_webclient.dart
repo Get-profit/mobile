@@ -19,7 +19,6 @@ class ClienteWebClient {
     final Response response = await client.post(clientUrl,
         headers: {
           'Content-type': 'application/json',
-          'password': '1000',
         },
         body: clienteJson);
 
