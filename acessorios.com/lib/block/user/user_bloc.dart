@@ -48,10 +48,12 @@ class UserBloc with UserValidator{
 
   void save(User user) async{
     _stateController.add(UserBlocState(UserState.LOADING));
-    await Future.delayed(Duration(seconds: 3));
-    if(user == null){
-      _webClient.save(user).then((users) {
+    print("usuarios");
+    print(user);
+    if(user.id == 0){
+      _webClient.save(user).then((users)async {
         if(users != null){
+          await Future.delayed(Duration(seconds: 3));
           _stateController.add(UserBlocState(UserState.DONE));
         }else{
           _stateController.add(UserBlocState(UserState.ERROR));

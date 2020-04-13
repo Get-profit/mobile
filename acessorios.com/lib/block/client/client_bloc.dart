@@ -8,7 +8,6 @@ import 'package:get_profit/models/usuario.dart';
 import 'package:get_profit/validators/client_validator.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:get_profit/block/button_state.dart';
-import 'package:get_profit/block/cep_bloc.dart';
 
 class ClientBloc with ClientValidator{
 
@@ -20,6 +19,7 @@ class ClientBloc with ClientValidator{
   final BehaviorSubject<String> _telefoneController = BehaviorSubject<String>();
   final BehaviorSubject<String> _rgController = BehaviorSubject<String>();
   final BehaviorSubject<String> _numeroController = BehaviorSubject<String>();
+  final BehaviorSubject<String> _cepController = BehaviorSubject<String>();
 
 
   Function(String) get changeNome => _nomeController.sink.add;
@@ -28,6 +28,7 @@ class ClientBloc with ClientValidator{
   Function(String) get changeRG => _rgController.sink.add;
   Function(String) get changeNumero => _numeroController.sink.add;
   Function(String) get changeTelefone => _telefoneController.sink.add;
+  Function(String) get changeCEP => _cepController.sink.add;
   Stream<ClientBlocState> get outState => _stateController.stream;
 
   Stream<FieldState> get outNome => Rx.combineLatest2(_nomeController.stream.transform(nomeValidator), outState, (a,b){
@@ -54,6 +55,10 @@ class ClientBloc with ClientValidator{
     return a;
   });
 
+  Stream<FieldState> get outCEP => Rx.combineLatest2(_cepController.stream.transform(cepValidator), outState, (a,b){
+    a.enabled = b.state != ClientState.LOADING;
+    return a;
+  });
   Stream<FieldState> get outNumero => Rx.combineLatest2(_numeroController.stream.transform(numeroValidator), outState, (a,b){
     a.enabled = b.state != ClientState.LOADING;
     return a;
@@ -61,7 +66,7 @@ class ClientBloc with ClientValidator{
 
 
   Stream<ButtonState> get outClientButton => Rx.combineLatest7(
-      outNome, outEmail, outCPF,outRG,outNumero,outTelefone,outState, (a,b,c,d,e,f,g){
+      outNome, outEmail, outCPF,outTelefone,outCEP,outNumero,outState, (a,b,c,d,e,f,g){
     return ButtonState(
         loading: g.state == ClientState.LOADING,
         enabled: a.error == null && b.error == null && c.error == null && d.error == null && e.error == null && f.error == null && g.state != ClientState.LOADING
@@ -97,6 +102,7 @@ class ClientBloc with ClientValidator{
     _telefoneController.close();
     _rgController.close();
     _numeroController.close();
+    _cepController.close();
   }
 
 }

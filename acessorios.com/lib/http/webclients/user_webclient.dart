@@ -25,4 +25,20 @@ class UserWebClient {
     return User.fromJson(jsonDecode(response.body));
   }
 
+
+  Future<User> login(User user) async {
+    final String userJson = jsonEncode(user.toJson());
+
+    final Response response = await client.post("http://35.208.89.16/api/login"
+        ,
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: userJson);
+
+    return User.fromJson(jsonDecode(response.body));
+  }
+
 }
+
+

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_profit/block/cep_bloc.dart';
 import 'package:get_profit/block/client/client_bloc.dart';
 import 'package:get_profit/block/field_state.dart';
-import 'package:get_profit/components/cep_field.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/client_button.dart';
 import 'package:get_profit/components/input.dart';
@@ -144,16 +142,22 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   );
                                 }
                               ),
-                              CepField(
-                                decoration: InputDecoration(
-                                    focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
-                                    hintText: "CEP",
-                                    hintStyle: TextStyle(color: Colors.green),
-                                    enabledBorder: UnderlineInputBorder(
-                                        borderSide:
-                                        (BorderSide(color: Colors.green))),
-                                ),
-                                style: TextStyle(color: Colors.green),
+                              StreamBuilder<FieldState>(
+                                  stream: _clientBloc.outCEP,
+                                  initialData: FieldState(),
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CEP" : cliente.numero,snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number,
+                                      inputFormatters: [
+                                        WhitelistingTextInputFormatter.digitsOnly,
+                                        CepInputFormatter(),
+                                      ],
+                                      onChanged: _clientBloc.changeCEP,
+                                      enabled: snapshot.data.enabled,
+                                    );
+                                  }
                               ),
                               StreamBuilder<FieldState>(
                                 stream: _clientBloc.outNumero,

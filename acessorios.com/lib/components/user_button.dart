@@ -33,6 +33,8 @@ class UserButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),),
               onPressed: snapshot.data.enabled ? (){
+                print("USUARIO BOTAO:" + user.id.toString());
+                print(user);
                 userBloc.save(user);
                 Navigator.pop(context);
                 //Scaffold.of(context).showSnackBar(SnackBar(content: Text('Dados processados com sucesso')));

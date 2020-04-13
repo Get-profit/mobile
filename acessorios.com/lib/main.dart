@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get_profit/screens/client/client_list.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/login_screen.dart';
 import 'package:get_profit/screens/service/service_list.dart';
@@ -11,7 +12,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 void main() async{
   runApp(MaterialApp(
-    home: ServiceList(),
+    home: ClienteScreen(),
     theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
         hintColor: Colors.white,
