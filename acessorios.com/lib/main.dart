@@ -12,7 +12,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 void main() async{
   runApp(MaterialApp(
-    home: ClienteScreen(),
+    home: UserList(),
     theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
         hintColor: Colors.white,

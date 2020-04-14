@@ -109,7 +109,7 @@ class UsuarioScreen extends StatelessWidget {
                                     SizedBox(
                                       height: 20,
                                     ),
-                                    UserButton(_userBloc,user == null ? User(0,_login.text,_senha.text,_cargo.text) : user )
+                                    UserButton(_userBloc,user == null ? User(0,_userBloc.changeLogin.toString(),_userBloc.changePassword.toString(),_userBloc.changeCargo.toString()) : user )
                                   ],
                                 ),
                               )),

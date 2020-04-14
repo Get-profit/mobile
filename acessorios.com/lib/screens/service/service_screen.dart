@@ -4,12 +4,14 @@ import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/block/service/service_bloc.dart';
 import 'package:get_profit/components/input.dart';
 import 'package:get_profit/components/service_button.dart';
+import 'package:get_profit/delegates/client_search.dart';
 import 'package:get_profit/models/servico.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 
 class ServiceScreen extends StatelessWidget {
+
 
   ServiceScreen({this.servico});
   final ServicesOrder servico;
@@ -20,7 +22,7 @@ class ServiceScreen extends StatelessWidget {
   TextEditingController _defeito = TextEditingController();
   TextEditingController _descricao = TextEditingController();
   ServiceOrderBloc _serviceBloc = ServiceOrderBloc();
-
+  String result;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,18 +56,38 @@ class ServiceScreen extends StatelessWidget {
                           child: Column(
                             children: <Widget>[
                               SizedBox(height: 12,),
+                              Container(
+                                width: 170,
+                                child: RaisedButton(
+                                  child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      Text("Buscar Cliente", style: TextStyle(color: Colors.white),),
+                                      Icon(Icons.search,color: Colors.white,)
+                                    ],
+                                  ),
+                                  color: Colors.lightGreen,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),),
+                                  onPressed: () async{
+                                    result = await showSearch(context: context, delegate: ClientSearch());
+                                    print(result);
+                                    },
+                                ),
+                              ),
                               StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outCliente,
-                                initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    decoration:InputDecorationAcessorios().input("NOME",snapshot.data.error),
-                                    style: TextStyle(color: Colors.green),
-                                    keyboardType: TextInputType.text,
-                                    onChanged: _serviceBloc.changeCliente,
-                                    enabled: snapshot.data.enabled,
-                                  );
-                                }
+                                  stream: _serviceBloc.outCliente,
+                                  initialData: result == null ? FieldState() : result,
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      controller: _cliente,
+                                      decoration:InputDecorationAcessorios().input(result == null ? "CLIENTE" : result,snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.text,
+                                      onChanged: _serviceBloc.changeCliente,
+                                      enabled: snapshot.data.enabled,
+                                    );
+                                  }
                               ),
                               StreamBuilder<FieldState>(
                                 stream: _serviceBloc.outValor,
@@ -142,6 +164,9 @@ class ServiceScreen extends StatelessWidget {
                                     enabled: snapshot.data.enabled,
                                   );
                                 }
+                              ),
+                              SizedBox(
+                                height: 12,
                               ),
                               ServiceOrderButton(_serviceBloc,servico)
                             ],

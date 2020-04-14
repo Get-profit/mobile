@@ -5,7 +5,6 @@ import 'package:get_profit/block/field_state.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/client_button.dart';
 import 'package:get_profit/components/input.dart';
-import 'package:get_profit/http/api_postalcode.dart';
 import 'package:get_profit/models/address.dart';
 import 'package:get_profit/models/cliente.dart';
 
@@ -135,7 +134,6 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                     inputFormatters: [
                                       WhitelistingTextInputFormatter.digitsOnly,
                                       TelefoneInputFormatter(),
-
                                     ],
                                     onChanged: _clientBloc.changeTelefone,
                                     enabled: snapshot.data.enabled,
@@ -156,6 +154,39 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                       ],
                                       onChanged: _clientBloc.changeCEP,
                                       enabled: snapshot.data.enabled,
+                                    );
+                                  }
+                              ),
+                              StreamBuilder<FieldState>(
+                                  stream: null,
+                                  initialData: FieldState(),
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CIDADE" : cliente.cidade,snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number,
+                                    );
+                                  }
+                              ),
+                              StreamBuilder<FieldState>(
+                                  stream: null,
+                                  initialData: FieldState(),
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "BAIRRO" : cliente.bairro,snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number,
+                                    );
+                                  }
+                              ),
+                              StreamBuilder<FieldState>(
+                                  stream: null,
+                                  initialData: FieldState(),
+                                  builder: (context, snapshot) {
+                                    return TextFormField(
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "ESTADO" : cliente.estado,snapshot.data.error),
+                                      style: TextStyle(color: Colors.green),
+                                      keyboardType: TextInputType.number,
                                     );
                                   }
                               ),
