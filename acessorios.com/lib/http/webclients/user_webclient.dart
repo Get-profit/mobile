@@ -24,7 +24,7 @@ class UserWebClient {
 
     return User.fromJson(jsonDecode(response.body));
   }
-  Future<User> update(User user) async {
+  Future<int> update(User user) async {
     final String userJson = jsonEncode(user.toJson());
     final Response response = await client.put(userUrl,
         headers: {
@@ -32,7 +32,7 @@ class UserWebClient {
         },
         body: userJson);
 
-    return User.fromJson(jsonDecode(response.body));
+    return response.statusCode;
   }
 
   Future<User> login(String login,String senha) async {
@@ -41,16 +41,12 @@ class UserWebClient {
         "apelido": login,
         "senha": senha
     };
-
-    print(loginJson);
-
     final Response response = await client.post("http://35.208.89.16/api/login"
         ,
         headers: {
           'Content-type': 'application/json',
         },
         body: jsonEncode(loginJson));
-
     return User.fromJson(jsonDecode(response.body));
   }
    Future<int> delete(String id) async {
@@ -59,7 +55,6 @@ class UserWebClient {
         headers: {
           'Content-type': 'application/json',
         },);
-
     return response.statusCode;
   }
 

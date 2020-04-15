@@ -4,8 +4,6 @@ import 'package:get_profit/http/webclients/user_webclient.dart';
 import 'package:get_profit/models/usuario.dart';
 
 class UserScreen extends StatefulWidget {
-
-
   UserScreen({this.user});
   final User user;
   @override
@@ -83,7 +81,7 @@ class _UserScreenState extends State<UserScreen> {
           SizedBox(height: 12,),
           TextFormField(
             controller: _login,
-            decoration: InputDecorationAcessorios().input(user == null ? "LOGIN" : user.apelido),
+            decoration: InputDecorationAcessorios().input("LOGIN"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
             validator: _validaNome,
@@ -93,7 +91,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           TextFormField(
             controller: _senha,
-            decoration: InputDecorationAcessorios().input(user == null ? "SENHA" : user.senha),
+            decoration: InputDecorationAcessorios().input("SENHA"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
             obscureText: true,
@@ -104,7 +102,7 @@ class _UserScreenState extends State<UserScreen> {
           ),
           TextFormField(
             controller: _cargo,
-            decoration: InputDecorationAcessorios().input(user == null ? "CARGO" : user.cargo),
+            decoration: InputDecorationAcessorios().input("CARGO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
             validator: _validaCargo,
@@ -156,21 +154,14 @@ class _UserScreenState extends State<UserScreen> {
 
   _sendForm() {
     if (_key.currentState.validate()) {
-      // Sem erros na validação
-      //_key.currentState.save();
-      print("Login: " + _login.text.toString());
-      print("Senha:" + _senha.text.toString());
-      print("Cargo:" + _cargo.text.toString());
       if(user != null){
-        print("USUARIO");
-        print(user.id);
         UserWebClient().update(User(
           id:user.id ,
           apelido: _login.text.trim(),
           senha:_senha.text.trim(),
           cargo: _cargo.text.trim()
         )).then((value){
-          if(user!= null){
+          if(value == 200){
             print("ALTEROU");
           }
         });
@@ -183,12 +174,10 @@ class _UserScreenState extends State<UserScreen> {
             cargo: _cargo.text.trim()
         )).then((value){
           print("CRIADO");
-          print(value);
         });
         Navigator.pop(context);
       }
     } else {
-      // erro de validação
       setState(() {
         _validate = true;
       });

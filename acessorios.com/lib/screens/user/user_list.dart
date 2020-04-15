@@ -61,13 +61,11 @@ class _UserListState extends State<UserList> {
                             ),
                           ),
                           onTap: (){
-                            setState(() {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => UserScreen(user: user,),
-                                ),
-                              );
-                            });
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => UserScreen(user: user,),
+                              ),
+                            );
                           },
                         ),
 

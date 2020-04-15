@@ -4,6 +4,7 @@ import 'package:get_profit/models/cliente.dart';
 import 'package:http/http.dart';
 
 class ClienteWebClient {
+
   Future<List<Cliente>> findAll() async {
     final Response response =
     await client.get(clientUrl).timeout(Duration(seconds: 5));
@@ -25,19 +26,18 @@ class ClienteWebClient {
     return Cliente.fromJson(jsonDecode(response.body));
   }
 
-  Future<Cliente> update(Cliente user) async {
-    final String userJson = jsonEncode(user.toJson());
-    final Response response = await client.put(userUrl,
+  Future<int> update(Cliente cliente) async {
+    final String clientJson = jsonEncode(cliente.toJson());
+    final Response response = await client.put(clientUrl,
         headers: {
           'Content-type': 'application/json',
         },
-        body: userJson);
-
-    return Cliente.fromJson(jsonDecode(response.body));
+        body: clientJson);
+    return response.statusCode;
   }
 
   Future<int> delete(String id) async {
-    final Response response = await client.delete("http://35.208.89.16/api/usuarios/$id"
+    final Response response = await client.delete("http://35.208.89.16/api/clientes/$id"
       ,
       headers: {
         'Content-type': 'application/json',
@@ -45,5 +45,7 @@ class ClienteWebClient {
 
     return response.statusCode;
   }
+
+
 
 }

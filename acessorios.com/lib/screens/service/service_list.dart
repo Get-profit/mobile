@@ -17,11 +17,12 @@ class ServiceList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.white),
         title: Text('SERVIÇOS', style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: Colors.green,
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.close), color: Colors.white,
+          IconButton(icon: Icon(Icons.close),
           onPressed: ()=> Navigator.pop(context),)
         ],
       ),

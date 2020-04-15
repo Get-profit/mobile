@@ -5,18 +5,24 @@ import 'package:get_profit/http/webclients/client_webclient.dart';
 import 'package:get_profit/models/cliente.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 
-class ClientList extends StatelessWidget {
+class ClientList extends StatefulWidget {
+  @override
+  _ClientListState createState() => _ClientListState();
+}
 
-   final ClienteWebClient _webClient = ClienteWebClient();
+class _ClientListState extends State<ClientList> {
+  final ClienteWebClient _webClient = ClienteWebClient();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Clientes'),
+        title: Text('CLIENTES',style: TextStyle(color: Colors.white),),
+        centerTitle: true,
+        backgroundColor: Colors.green,
       ),
       body: FutureBuilder<List<Cliente>>(
-         future: _webClient.findAll(),
+        future: _webClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -35,7 +41,11 @@ class ClientList extends StatelessWidget {
                       final Cliente cliente = clientes[index];
                       return Card(
                         child: ListTile(
-                          leading: Icon(Icons.monetization_on),
+                          contentPadding: EdgeInsets.only(right: 60,left: 50),
+                          trailing:IconButton(icon:Icon(Icons.delete),
+                            onPressed: (){
+                              showAlertDialog(context, cliente);
+                            },),
                           title: Text(
                             cliente.nome.toString(),
                             style: TextStyle(
@@ -74,13 +84,17 @@ class ClientList extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         backgroundColor: Colors.green,
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => ClienteScreen(),
-            ),
-          );
+          setState(() {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ClienteScreen(),
+              ),
+            );
+          });
+
         },
         child: Icon(
           Icons.add,
@@ -88,4 +102,43 @@ class ClientList extends StatelessWidget {
       ),
     );
   }
+
+
+  showAlertDialog(BuildContext context, Cliente cliente) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancelar", style: TextStyle(color: Colors.redAccent),),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget acceptButton = FlatButton(
+      child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+      onPressed:  () {
+        Navigator.pop(context);
+        ClienteWebClient().delete(cliente.id.toString()).then((value){
+          if(value == 204){
+            setState(() {
+
+            });
+          }
+        });
+      },
+    );
+    //configura o AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Deseja Excluir o Cliente?", style: TextStyle(color: Colors.green),),
+      actions: [
+        acceptButton,
+        cancelButton,
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 }
+

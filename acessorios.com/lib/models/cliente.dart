@@ -13,7 +13,7 @@ class Cliente {
   final int numero;
 
 
-  Cliente(
+  Cliente({
       this.id,
       this.nome,
       this.cpf,
@@ -26,7 +26,7 @@ class Cliente {
       this.bairro,
       this.cidade,
       this.estado,
-      );
+  });
 
   @override
   String toString() {
