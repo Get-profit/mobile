@@ -25,4 +25,25 @@ class ClienteWebClient {
     return Cliente.fromJson(jsonDecode(response.body));
   }
 
+  Future<Cliente> update(Cliente user) async {
+    final String userJson = jsonEncode(user.toJson());
+    final Response response = await client.put(userUrl,
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: userJson);
+
+    return Cliente.fromJson(jsonDecode(response.body));
+  }
+
+  Future<int> delete(String id) async {
+    final Response response = await client.delete("http://35.208.89.16/api/usuarios/$id"
+      ,
+      headers: {
+        'Content-type': 'application/json',
+      },);
+
+    return response.statusCode;
+  }
+
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class InputDecorationAcessorios{
 
-  InputDecoration input(String texto, String error){
+  InputDecoration input(String texto){
     return InputDecoration(
         focusedBorder: UnderlineInputBorder( borderSide: BorderSide( color:  Colors.green)),
         hintText: texto,
@@ -10,7 +10,6 @@ class InputDecorationAcessorios{
         enabledBorder: UnderlineInputBorder(
             borderSide:
             (BorderSide(color: Colors.green))),
-      errorText: error
     );
   }
 }

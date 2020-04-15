@@ -1,7 +1,6 @@
 import 'package:get_profit/block/client/client_bloc_state.dart';
 import 'package:get_profit/block/field_state.dart';
 import 'package:get_profit/block/service/service_bloc_state.dart';
-import 'package:get_profit/block/user/user_bloc_state.dart';
 import 'package:get_profit/http/webclients/service_webclient.dart';
 import 'package:get_profit/models/servico.dart';
 import 'package:get_profit/validators/service_order_validator.dart';

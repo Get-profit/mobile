@@ -3,16 +3,17 @@ class User {
   final String apelido;
   final String senha;
   final String cargo;
-  User(
+  User({
       this.id,
       this.apelido,
       this.senha,
       this.cargo,
+      }
       );
 
   @override
   String toString() {
-    return 'Contact{id: $id, apelido: $apelido,'
+    return 'Usuario{id: $id, apelido: $apelido,'
         ' senha: $senha,'
         ' cargo: $cargo,'
         '}';
@@ -27,6 +28,7 @@ class User {
 
   Map<String, dynamic> toJson() =>
       {
+        'id' : id,
         'apelido': apelido,
         'senha': senha,
         'cargo': cargo,

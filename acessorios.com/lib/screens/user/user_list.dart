@@ -5,7 +5,12 @@ import 'package:get_profit/http/webclients/user_webclient.dart';
 import 'package:get_profit/models/usuario.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
 
-class UserList extends StatelessWidget {
+class UserList extends StatefulWidget {
+  @override
+  _UserListState createState() => _UserListState();
+}
+
+class _UserListState extends State<UserList> {
 
   final UserWebClient _webClient = UserWebClient();
 
@@ -37,7 +42,11 @@ class UserList extends StatelessWidget {
                       final User user = usuarios[index];
                       return Card(
                         child: ListTile(
-                          leading: Icon(Icons.monetization_on),
+                          contentPadding: EdgeInsets.only(right: 60,left: 50),
+                          trailing:IconButton(icon:Icon(Icons.delete),
+                            onPressed: (){
+                              showAlertDialog(context, user);
+                            },),
                           title: Text(
                             user.apelido.toString(),
                             style: TextStyle(
@@ -52,13 +61,16 @@ class UserList extends StatelessWidget {
                             ),
                           ),
                           onTap: (){
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => UsuarioScreen(user: user,),
-                              ),
-                            );
+                            setState(() {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => UserScreen(user: user,),
+                                ),
+                              );
+                            });
                           },
                         ),
+
                       );
                     },
                     itemCount: usuarios.length,
@@ -74,13 +86,16 @@ class UserList extends StatelessWidget {
 
           return CenteredMessage('Unknown error');
         },
+
       ),
+
       floatingActionButton: FloatingActionButton(
+        mini: true,
         backgroundColor: Colors.green,
         onPressed: () {
           Navigator.of(context).push(
             MaterialPageRoute(
-              builder: (context) => UsuarioScreen(),
+              builder: (context) => UserScreen(),
             ),
           );
         },
@@ -88,6 +103,43 @@ class UserList extends StatelessWidget {
           Icons.add,
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context, User user) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancelar", style: TextStyle(color: Colors.redAccent),),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget acceptButton = FlatButton(
+      child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+      onPressed:  () {
+        Navigator.pop(context);
+        UserWebClient().delete(user.id.toString()).then((value){
+          if(value == 204){
+            setState(() {
+
+            });
+          }
+        });
+      },
+    );
+    //configura o AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Deseja Excluir o Usuário?", style: TextStyle(color: Colors.green),),
+      actions: [
+        acceptButton,
+        cancelButton,
+      ],
+    );
+    //exibe o diálogo
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:get_profit/block/field_state.dart';
-import 'package:get_profit/block/login/login_bloc.dart';
 import 'package:get_profit/components/input.dart';
-import 'package:get_profit/components/login_button.dart';
+import 'package:get_profit/http/webclients/user_webclient.dart';
+import 'package:get_profit/screens/service/service_list.dart';
 
 class LoginScreen extends StatefulWidget {
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  GlobalKey<FormState> _keyForm = new GlobalKey();
+  bool _validate = false;
   TextEditingController _login = TextEditingController();
   TextEditingController _senha = TextEditingController();
-
-  LoginBloc _loginBloc = LoginBloc();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,57 +47,106 @@ class _LoginScreenState extends State<LoginScreen> {
                     elevation: 0,
                     color: Colors.transparent,
                     child: Form(
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(height: 20,),
-                              StreamBuilder<FieldState>(
-                                  stream: _loginBloc.outLogin,
-                                  initialData: FieldState(),
-                                  builder: (context, snapshot) {
-                                    return TextFormField(
-                                      autocorrect: false,
-                                      controller: _login,
-                                      decoration: InputDecorationAcessorios().input("USUÁRIO", snapshot.data.error),
-                                      style: TextStyle(color: Colors.green),
-                                      onChanged: _loginBloc.changeLogin,
-                                      enabled: snapshot.data.enabled,
-                                    );
-                                  }
-                              ),
-                              SizedBox(
-                                height: 16,
-                              ),
-                              StreamBuilder<FieldState>(
-                                  stream: _loginBloc.outPassword,
-                                  initialData: FieldState(),
-                                  builder: (context, snapshot) {
-                                    return TextFormField(
-                                      autocorrect: false,
-                                      controller: _senha,
-                                      decoration: InputDecorationAcessorios().input("SENHA",snapshot.data.error),
-                                      obscureText: true,
-                                      style: TextStyle(color: Colors.green),
-                                      onChanged: _loginBloc.changePassword,
-                                      enabled: snapshot.data.enabled,
-                                    );
-                                  }
-                              ),
-                              SizedBox(
-                                height: 20,
-                              ),
-                              LoginButton(_loginBloc)
-                            ],
-                          ),
-                        )),
+                        key: _keyForm,
+                        autovalidate: _validate,
+                        child: _form()),
                   ))
           ),
         ],
       ),
+
+
     );
   }
+
+  Widget _form(){
+        return Padding(
+            padding: EdgeInsets.all(16),
+              child: Column(
+              children: <Widget>[
+              SizedBox(height: 20,),
+              TextFormField(
+              autocorrect: false,
+              controller: _login,
+              decoration: InputDecorationAcessorios().input("USUÁRIO"),
+              style: TextStyle(color: Colors.green),
+                validator: _validaLogin,
+              ),
+              SizedBox(
+              height: 16,
+              ),
+              TextFormField(
+              autocorrect: false,
+              controller: _senha,
+              decoration: InputDecorationAcessorios().input("SENHA"),
+              obscureText: true,
+              style: TextStyle(color: Colors.green),
+                validator: _validaSenha,
+              ),
+              SizedBox(
+              height: 20,
+              ),
+                RaisedButton(
+                  elevation: 0,
+                  child: Text(
+                    "Salvar",
+                    style: TextStyle(color: Colors.white,fontSize: 18),
+                  ),
+                  color: Colors.lightGreen,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),),
+                  onPressed: _sendForm,
+                ),
+
+          ],
+          ));
+
+      }
+
+  String _validaLogin(String value) {
+
+    if (value.length == 0) {
+      return "Informe o login";
+    }
+    return null;
+  }
+  String _validaSenha(String value) {
+
+    if (value.length == 0) {
+      return "Informe a senha";
+    }
+    return null;
+  }
+
+  _sendForm() {
+    if (_keyForm.currentState.validate()) {
+      print("Login: " + _login.text.toString());
+      print("Senha:" + _senha.text.toString());
+      UserWebClient().login(_login.text.trim().toString(),_senha.text.trim().toString()).then((value){
+        if(value.id != null){
+          Future.delayed(const Duration(milliseconds: 2000), () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => ServiceList(),
+              ),
+            );
+          });
+
+        }else{
+          print("usuario invalido");
+        }
+
+      });
+    } else {
+      setState(() {
+        _validate = true;
+      });
+    }
+  }
+
 }
+
+
 
 
 

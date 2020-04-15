@@ -81,7 +81,7 @@ class ServiceScreen extends StatelessWidget {
                                   builder: (context, snapshot) {
                                     return TextFormField(
                                       controller: _cliente,
-                                      decoration:InputDecorationAcessorios().input(result == null ? "CLIENTE" : result,snapshot.data.error),
+                                      decoration:InputDecorationAcessorios().input(result == null ? "CLIENTE" : result),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.text,
                                       onChanged: _serviceBloc.changeCliente,
@@ -95,7 +95,7 @@ class ServiceScreen extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _valor,
-                                      decoration:InputDecorationAcessorios().input("VALOR",snapshot.data.error),
+                                      decoration:InputDecorationAcessorios().input("VALOR"),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                     inputFormatters: [
@@ -113,7 +113,7 @@ class ServiceScreen extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _marca,
-                                      decoration:InputDecorationAcessorios().input("MARCA",snapshot.data.error),
+                                      decoration:InputDecorationAcessorios().input("MARCA"),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                     onChanged: _serviceBloc.changeMarca,
@@ -127,7 +127,7 @@ class ServiceScreen extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _modelo,
-                                      decoration: InputDecorationAcessorios().input("MODELO",snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input("MODELO"),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                       onChanged: _serviceBloc.changeModelo,
@@ -141,7 +141,7 @@ class ServiceScreen extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _defeito,
-                                    decoration: InputDecorationAcessorios().input("DEFEITO",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input("DEFEITO"),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.multiline,
                                     maxLines: 3,
@@ -156,7 +156,7 @@ class ServiceScreen extends StatelessWidget {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _descricao,
-                                    decoration: InputDecorationAcessorios().input("DESCRIÇÃO",snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.multiline,
                                     maxLines: 3,

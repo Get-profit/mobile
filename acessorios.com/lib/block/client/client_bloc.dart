@@ -1,6 +1,5 @@
 import 'package:get_profit/block/client/client_bloc_state.dart';
 import 'package:get_profit/block/field_state.dart';
-import 'package:get_profit/block/user/user_bloc_state.dart';
 import 'package:get_profit/http/webclients/client_webclient.dart';
 import 'package:get_profit/http/webclients/user_webclient.dart';
 import 'package:get_profit/models/cliente.dart';

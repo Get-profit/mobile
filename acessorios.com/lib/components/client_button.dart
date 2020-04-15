@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_profit/block/button_state.dart';
 import 'package:get_profit/block/client/client_bloc.dart';
-import 'package:get_profit/block/user/user_bloc.dart';
-import 'package:get_profit/block/user/user_bloc_state.dart';
 import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/models/cliente.dart';
 import 'package:get_profit/models/usuario.dart';

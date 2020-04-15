@@ -22,15 +22,15 @@ class Cliente {
       this.email,
       this.cep,
       this.logradouro,
+      this.numero,
       this.bairro,
       this.cidade,
       this.estado,
-      this.numero,
       );
 
   @override
   String toString() {
-    return 'Contact{id: $id, name: $nome,'
+    return 'Cliente{id: $id, name: $nome,'
         ' cpf: $cpf,'
         ' rg: $rg,'
         ' telefone: $telefone,'
@@ -51,14 +51,15 @@ class Cliente {
         email = json['email'],
         cep = json['cep'],
         logradouro = json['logradouro'],
+        numero = json['numero'],
         bairro = json['bairro'],
         cidade = json['cidade'],
-        estado = json['estado'],
-        numero = json['numero']
+        estado = json['estado']
   ;
 
   Map<String, dynamic> toJson() =>
       {
+        'id': id,
         'nome': nome,
         'cpf': cpf,
         'rg': rg,
@@ -70,6 +71,5 @@ class Cliente {
         'cidade': cidade,
         'estado': estado,
         'numero': numero,
-
       };
 }

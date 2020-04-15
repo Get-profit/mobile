@@ -3,8 +3,10 @@ import 'package:get_profit/components/centered_message.dart';
 import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/http/webclients/service_webclient.dart';
 import 'package:get_profit/models/servico.dart';
+import 'package:get_profit/screens/client/client_list.dart';
 import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/service/service_screen.dart';
+import 'package:get_profit/screens/user/user_list.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
 
 class ServiceList extends StatelessWidget {
@@ -18,6 +20,10 @@ class ServiceList extends StatelessWidget {
         title: Text('SERVIÇOS', style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: Colors.green,
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.close), color: Colors.white,
+          onPressed: ()=> Navigator.pop(context),)
+        ],
       ),
       drawer: Drawer(
           elevation: 1.5,
@@ -26,13 +32,13 @@ class ServiceList extends StatelessWidget {
               ListView(
                 children: <Widget>[
                   ListTile(
-                    leading:  IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
-                    title: Text('CADASTRO USUÁRIOS', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                    leading:  IconButton(icon: Icon(Icons.person),color: Colors.blueAccent,),
+                    title: Text('USUÁRIOS', style: TextStyle(color: Colors.grey, fontSize: 15),),
                     onTap: (){
                       Navigator.pop(context);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UsuarioScreen()),
+                        MaterialPageRoute(builder: (context) => UserList()),
                       );
                     },
                   ),
@@ -41,13 +47,13 @@ class ServiceList extends StatelessWidget {
                     height: 5,
                   ),
                   ListTile(
-                    title: Text('CADASTRO CLIENTES', style: TextStyle(color: Colors.grey, fontSize: 15),),
-                    leading: IconButton(icon: Icon(Icons.person_add),color: Colors.blueAccent,),
+                    title: Text('CLIENTES', style: TextStyle(color: Colors.grey, fontSize: 15),),
+                    leading: IconButton(icon: Icon(Icons.person),color: Colors.blueAccent,),
                     onTap: (){
                       Navigator.pop(context);
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ClienteScreen()),
+                        MaterialPageRoute(builder: (context) => ClientList()),
                       );
                     },
                   ),
@@ -57,7 +63,7 @@ class ServiceList extends StatelessWidget {
           )
       ),
       body: FutureBuilder<List<ServicesOrder>>(
-         future: _webClient.findAll(),
+        future: _webClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -78,13 +84,13 @@ class ServiceList extends StatelessWidget {
                         child: ListTile(
                           leading: Icon(Icons.monetization_on),
                           title: Text(
-                            servico.idClient.nome.toString(),
+                            servico.cliente.nome.toString(),
                             style: TextStyle(
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(servico.modelo.toString()+"\n"+
+                          subtitle: Text(
                             servico.valorOrcado.toString(),
                             style: TextStyle(
                               fontSize: 16.0,
@@ -105,7 +111,7 @@ class ServiceList extends StatelessWidget {
                 }
               }
               return CenteredMessage(
-                'Nenhum Serviço Encontrado!',
+                'Nenhum usuário encontrado!',
                 icon: Icons.warning,
               );
               break;

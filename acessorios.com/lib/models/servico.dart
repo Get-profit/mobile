@@ -2,7 +2,7 @@ import 'package:get_profit/models/cliente.dart';
 
 class ServicesOrder {
   final int id;
-  final Cliente idClient;
+  final Cliente cliente;
   final String status;
   final DateTime dataEntrada;
   final String tipo;
@@ -17,7 +17,7 @@ class ServicesOrder {
 
   ServicesOrder(
       this.id,
-      this.idClient,
+      this.cliente,
       this.status,
       this.dataEntrada,
       this.tipo,
@@ -32,7 +32,7 @@ class ServicesOrder {
 
   @override
   String toString() {
-    return 'Contact{id: $id, name: ${idClient.nome},'
+    return 'Contact{id: $id, name: ${cliente.nome},'
         ' status: $status,'
         ' dataEntrada: $dataEntrada,'
         ' tipo: $tipo,'
@@ -48,7 +48,7 @@ class ServicesOrder {
 
   ServicesOrder.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        idClient = Cliente.fromJson(json['id']),
+        cliente = Cliente.fromJson(json['idClienteNavigation']),
         status = json['status'],
         dataEntrada = json['dataEntrada'],
         tipo = json['tipo'],
@@ -63,7 +63,7 @@ class ServicesOrder {
 
   Map<String, dynamic> toJson() =>
       {
-        'idClient': idClient.toJson(),
+        'cliente': cliente.toJson(),
         'status': status,
         'dataEntrada': dataEntrada,
         'tipo': tipo,

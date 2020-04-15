@@ -5,7 +5,6 @@ import 'package:get_profit/block/field_state.dart';
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:get_profit/components/client_button.dart';
 import 'package:get_profit/components/input.dart';
-import 'package:get_profit/models/address.dart';
 import 'package:get_profit/models/cliente.dart';
 
 class ClienteScreen extends StatefulWidget {
@@ -68,7 +67,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _nome,
-                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NOME" : cliente.nome,snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NOME" : cliente.nome),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.text,
                                     onChanged: _clientBloc.changeNome,
@@ -82,7 +81,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _email,
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "EMAIL" : cliente.email,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "EMAIL" : cliente.email),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.emailAddress,
                                     onChanged: _clientBloc.changeEmail,
@@ -96,7 +95,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _cpf,
-                                    decoration: InputDecorationAcessorios().input(cliente == null ? "CPF" : cliente.cpf,snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "CPF" : cliente.cpf),
                                     style: TextStyle(color: Colors.green),
                                     inputFormatters: [
                                       WhitelistingTextInputFormatter.digitsOnly,
@@ -114,7 +113,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _rg,
-                                    decoration: InputDecorationAcessorios().input(cliente == null ? "RG" : cliente.rg,snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "RG" : cliente.rg),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.number,
                                     onChanged: _clientBloc.changeRG,
@@ -128,7 +127,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _telefone,
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "TELEFONE" : cliente.telefone,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "TELEFONE" : cliente.telefone),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.phone,
                                     inputFormatters: [
@@ -145,7 +144,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   initialData: FieldState(),
                                   builder: (context, snapshot) {
                                     return TextFormField(
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CEP" : cliente.numero,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CEP" : cliente.numero),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                       inputFormatters: [
@@ -162,7 +161,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   initialData: FieldState(),
                                   builder: (context, snapshot) {
                                     return TextFormField(
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CIDADE" : cliente.cidade,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "CIDADE" : cliente.cidade),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                     );
@@ -173,7 +172,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   initialData: FieldState(),
                                   builder: (context, snapshot) {
                                     return TextFormField(
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "BAIRRO" : cliente.bairro,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "BAIRRO" : cliente.bairro),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                     );
@@ -184,7 +183,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                   initialData: FieldState(),
                                   builder: (context, snapshot) {
                                     return TextFormField(
-                                      decoration: InputDecorationAcessorios().input(cliente == null ? "ESTADO" : cliente.estado,snapshot.data.error),
+                                      decoration: InputDecorationAcessorios().input(cliente == null ? "ESTADO" : cliente.estado),
                                       style: TextStyle(color: Colors.green),
                                       keyboardType: TextInputType.number,
                                     );
@@ -196,7 +195,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                                 builder: (context, snapshot) {
                                   return TextFormField(
                                     controller: _numero,
-                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NÚMERO" : cliente.numero,snapshot.data.error),
+                                    decoration: InputDecorationAcessorios().input(cliente == null ? "NÚMERO" : cliente.numero),
                                     style: TextStyle(color: Colors.green),
                                     keyboardType: TextInputType.number,
                                     onChanged: _clientBloc.changeNumero,
