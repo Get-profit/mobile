@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:get_profit/models/cliente.dart';
 import 'package:http/http.dart' as http;
 
-class ClientSearch extends SearchDelegate<String>{
+class ClientSearch extends SearchDelegate<Cliente>{
   @override
   List<Widget> buildActions(BuildContext context) {
     return [
@@ -26,7 +27,7 @@ class ClientSearch extends SearchDelegate<String>{
 
   @override
   Widget buildResults(BuildContext context) {
-    Future.delayed(Duration.zero).then((_)=>close(context,query));
+    Future.delayed(Duration.zero).then((_)=>close(context,null));
     return Container();
   }
 
@@ -48,7 +49,7 @@ class ClientSearch extends SearchDelegate<String>{
                 title: Text(snapshot.data[index]["nome"]),
                 leading: Icon(Icons.account_circle),
                 onTap: (){
-                  close(context, snapshot.data[index]["nome"]);
+                  close(context, Cliente.fromJson(snapshot.data[index]));
                 },
               );
             },

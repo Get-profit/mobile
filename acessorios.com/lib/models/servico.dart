@@ -1,10 +1,12 @@
 import 'package:get_profit/models/cliente.dart';
 
 class ServicesOrder {
+
   final int id;
-  final Cliente cliente;
+  final int idCliente;
+  final Cliente idClienteNavigation;
   final String status;
-  final DateTime dataEntrada;
+  final String dataEntrada;
   final String tipo;
   final String marca;
   final String modelo;
@@ -12,12 +14,14 @@ class ServicesOrder {
   final String descricao;
   final String senhaDesbloqueio;
   final double valorOrcado;
-  final DateTime dataSaida;
+  final String dataSaida;
 
 
   ServicesOrder(
+      {
       this.id,
-      this.cliente,
+      this.idCliente,
+      this.idClienteNavigation,
       this.status,
       this.dataEntrada,
       this.tipo,
@@ -28,27 +32,29 @@ class ServicesOrder {
       this.senhaDesbloqueio,
       this.valorOrcado,
       this.dataSaida
+      }
       );
 
   @override
   String toString() {
-    return 'Contact{id: $id, name: ${cliente.nome},'
+    return 'Servico{id: $id, idCliente:$idCliente, idClienteNavigation:$idClienteNavigation,'
         ' status: $status,'
         ' dataEntrada: $dataEntrada,'
-        ' tipo: $tipo,'
+        ' tipo: $tipo'
         ' marca: $marca'
-        ' modelo: $modelo,'
-        ' defeito: $defeito,'
-        ' descricao: $descricao,'
-        ' senhaDesbloqueio: $senhaDesbloqueio,'
-        ' valorOrcado: $valorOrcado,'
-        ' dataSaida: $dataSaida,'
+        ' modelo: $modelo'
+        ' defeito: $defeito'
+        ' descricao: $descricao'
+        ' senhaDesbloqueio: $senhaDesbloqueio'
+        ' valorOrcado: $valorOrcado'
+        ' dataSaida: $dataSaida'
         '}';
   }
 
   ServicesOrder.fromJson(Map<String, dynamic> json)
       : id = json['id'],
-        cliente = Cliente.fromJson(json['idClienteNavigation']),
+        idCliente = json['idCliente'],
+        idClienteNavigation = Cliente.fromJson(json['idClienteNavigation']),
         status = json['status'],
         dataEntrada = json['dataEntrada'],
         tipo = json['tipo'],
@@ -63,7 +69,9 @@ class ServicesOrder {
 
   Map<String, dynamic> toJson() =>
       {
-        'cliente': cliente.toJson(),
+        'id': id,
+        'idCliente': idCliente,
+        'idClienteNavigation': idClienteNavigation.toJson(),
         'status': status,
         'dataEntrada': dataEntrada,
         'tipo': tipo,

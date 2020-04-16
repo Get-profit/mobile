@@ -9,10 +9,13 @@ import 'package:get_profit/screens/service/service_screen.dart';
 import 'package:get_profit/screens/user/user_list.dart';
 import 'package:get_profit/screens/user/user_screen.dart';
 
-class ServiceList extends StatelessWidget {
+class ServiceList extends StatefulWidget {
+  @override
+  _ServiceListState createState() => _ServiceListState();
+}
 
-   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
-
+class _ServiceListState extends State<ServiceList> {
+  final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +26,7 @@ class ServiceList extends StatelessWidget {
         backgroundColor: Colors.green,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.close),
-          onPressed: ()=> Navigator.pop(context),)
+            onPressed: ()=> Navigator.pop(context),)
         ],
       ),
       drawer: Drawer(
@@ -63,6 +66,7 @@ class ServiceList extends StatelessWidget {
             ],
           )
       ),
+
       body: FutureBuilder<List<ServicesOrder>>(
         future: _webClient.findAll(),
         builder: (context, snapshot) {
@@ -75,6 +79,7 @@ class ServiceList extends StatelessWidget {
             case ConnectionState.active:
               break;
             case ConnectionState.done:
+
               if(snapshot.hasData){
                 final List<ServicesOrder> servicos = snapshot.data;
                 if (servicos.isNotEmpty) {
@@ -83,18 +88,20 @@ class ServiceList extends StatelessWidget {
                       final ServicesOrder servico = servicos[index];
                       return Card(
                         child: ListTile(
-                          leading: Icon(Icons.monetization_on),
-                          title: Text(
-                            servico.cliente.nome.toString(),
+                          contentPadding: EdgeInsets.only(right: 60,left: 20),
+                          trailing: IconButton(icon:Icon(Icons.keyboard_arrow_right), onPressed: (){},),
+                          title: Text(servico.id.toString() + " - "+
+                            servico.idClienteNavigation.nome.toString(),
                             style: TextStyle(
-                              fontSize: 24.0,
+                              fontSize: 18.0,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text(
-                            servico.valorOrcado.toString(),
+                          subtitle: Text("Data de Entrada: "+ servico.dataEntrada.substring(0,10) + "\n" + "Valor: " +
+                              servico.valorOrcado.toString() + "\n" +"${servico.tipo}: " + servico.marca +" - " + servico.modelo
+                            ,
                             style: TextStyle(
-                              fontSize: 16.0,
+                              fontSize: 14.0,
                             ),
                           ),
                           onTap: (){
@@ -112,7 +119,7 @@ class ServiceList extends StatelessWidget {
                 }
               }
               return CenteredMessage(
-                'Nenhum usuário encontrado!',
+                'Nenhum Serviço encontrado!',
                 icon: Icons.warning,
               );
               break;
@@ -122,6 +129,7 @@ class ServiceList extends StatelessWidget {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        mini: true,
         backgroundColor: Colors.green,
         onPressed: () {
           Navigator.of(context).push(
@@ -137,3 +145,4 @@ class ServiceList extends StatelessWidget {
     );
   }
 }
+

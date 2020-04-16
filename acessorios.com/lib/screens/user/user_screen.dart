@@ -6,12 +6,12 @@ import 'package:get_profit/models/usuario.dart';
 class UserScreen extends StatefulWidget {
   UserScreen({this.user});
   final User user;
+
   @override
   _UserScreenState createState() => _UserScreenState();
 }
 
 class _UserScreenState extends State<UserScreen> {
-
 
   User get user => widget.user;
   final TextEditingController _login = TextEditingController();

@@ -15,7 +15,7 @@ import 'package:scoped_model/scoped_model.dart';
 
 void main() async{
   runApp(MaterialApp(
-    home: LoginScreen(),
+    home: ServiceList(),
     theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
         hintColor: Colors.white,
@@ -23,6 +23,5 @@ void main() async{
     ),
     debugShowCheckedModeBanner: false,
   ));
-
 
 }

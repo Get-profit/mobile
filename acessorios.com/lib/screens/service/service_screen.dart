@@ -1,28 +1,35 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_profit/block/field_state.dart';
-import 'package:get_profit/block/service/service_bloc.dart';
 import 'package:get_profit/components/input.dart';
-import 'package:get_profit/components/service_button.dart';
 import 'package:get_profit/delegates/client_search.dart';
+import 'package:get_profit/http/webclients/service_webclient.dart';
+import 'package:get_profit/models/cliente.dart';
 import 'package:get_profit/models/servico.dart';
-import 'package:get_profit/screens/client/cliente_screen.dart';
-import 'package:get_profit/screens/user/user_screen.dart';
 import 'package:brasil_fields/brasil_fields.dart';
+import 'package:date_format/date_format.dart';
 
-class ServiceScreen extends StatelessWidget {
-
-
+class ServiceScreen extends StatefulWidget {
   ServiceScreen({this.servico});
   final ServicesOrder servico;
+  @override
+  _ServiceScreenState createState() => _ServiceScreenState();
+}
+
+class _ServiceScreenState extends State<ServiceScreen> {
+  ServicesOrder get servico => widget.servico;
   TextEditingController _cliente = TextEditingController();
   TextEditingController _valor = TextEditingController();
   TextEditingController _marca = TextEditingController();
   TextEditingController _modelo = TextEditingController();
   TextEditingController _defeito = TextEditingController();
+  TextEditingController _senhaDesbloqueio = TextEditingController();
   TextEditingController _descricao = TextEditingController();
-  ServiceOrderBloc _serviceBloc = ServiceOrderBloc();
-  String result;
+  TextEditingController _tipo = TextEditingController();
+  int idCliente;
+  Cliente resultCliente;
+  GlobalKey<FormState> _key = new GlobalKey();
+  bool _validate = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,6 +45,7 @@ class ServiceScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body:
       ListView(
+        scrollDirection: Axis.vertical,
         padding: EdgeInsets.only(top: 20),
         children: <Widget>[
           Center(
@@ -51,133 +59,200 @@ class ServiceScreen extends StatelessWidget {
                     elevation: 0,
                     color: Colors.transparent,
                     child: Form(
-                        child: Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Column(
-                            children: <Widget>[
-                              SizedBox(height: 12,),
-                              Container(
-                                width: 170,
-                                child: RaisedButton(
-                                  child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: <Widget>[
-                                      Text("Buscar Cliente", style: TextStyle(color: Colors.white),),
-                                      Icon(Icons.search,color: Colors.white,)
-                                    ],
-                                  ),
-                                  color: Colors.lightGreen,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8),),
-                                  onPressed: () async{
-                                    result = await showSearch(context: context, delegate: ClientSearch());
-                                    print(result);
-                                    },
-                                ),
-                              ),
-                              StreamBuilder<FieldState>(
-                                  stream: _serviceBloc.outCliente,
-                                  initialData: result == null ? FieldState() : result,
-                                  builder: (context, snapshot) {
-                                    return TextFormField(
-                                      controller: _cliente,
-                                      decoration:InputDecorationAcessorios().input(result == null ? "CLIENTE" : result),
-                                      style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.text,
-                                      onChanged: _serviceBloc.changeCliente,
-                                      enabled: snapshot.data.enabled,
-                                    );
-                                  }
-                              ),
-                              StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outValor,
-                                  initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    controller: _valor,
-                                      decoration:InputDecorationAcessorios().input("VALOR"),
-                                      style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.number,
-                                    inputFormatters: [
-                                      WhitelistingTextInputFormatter.digitsOnly,
-                                      RealInputFormatter(),
-                                    ],
-                                    onChanged: _serviceBloc.changeValor,
-                                    enabled: snapshot.data.enabled,
-                                  );
-                                }
-                              ),
-                              StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outMarca,
-                                  initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    controller: _marca,
-                                      decoration:InputDecorationAcessorios().input("MARCA"),
-                                      style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.number,
-                                    onChanged: _serviceBloc.changeMarca,
-                                    enabled: snapshot.data.enabled,
-                                  );
-                                }
-                              ),
-                              StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outModelo,
-                                  initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    controller: _modelo,
-                                      decoration: InputDecorationAcessorios().input("MODELO"),
-                                      style: TextStyle(color: Colors.green),
-                                      keyboardType: TextInputType.number,
-                                      onChanged: _serviceBloc.changeModelo,
-                                      enabled: snapshot.data.enabled,
-                                  );
-                                }
-                              ),
-                              StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outDefeito,
-                                  initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    controller: _defeito,
-                                    decoration: InputDecorationAcessorios().input("DEFEITO"),
-                                    style: TextStyle(color: Colors.green),
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 3,
-                                    onChanged: _serviceBloc.changeDefeito,
-                                    enabled: snapshot.data.enabled,
-                                  );
-                                }
-                              ),
-                              StreamBuilder<FieldState>(
-                                stream: _serviceBloc.outDescricao,
-                                  initialData: FieldState(),
-                                builder: (context, snapshot) {
-                                  return TextFormField(
-                                    controller: _descricao,
-                                    decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
-                                    style: TextStyle(color: Colors.green),
-                                    keyboardType: TextInputType.multiline,
-                                    maxLines: 3,
-                                    onChanged: _serviceBloc.changeDescricao,
-                                    enabled: snapshot.data.enabled,
-                                  );
-                                }
-                              ),
-                              SizedBox(
-                                height: 12,
-                              ),
-                              ServiceOrderButton(_serviceBloc,servico)
-                            ],
-                          ),
-                        )),
+                        key: _key,
+                        autovalidate: _validate,
+                        child: _form()),
                   ))
           ),
         ],
       ),
     );
   }
-}
+  Widget _form(){
+    return Padding(
+      padding: EdgeInsets.all(16),
+      child: Column(
+        children: <Widget>[
+          SizedBox(height: 12,),
+          Container(
+            width: 170,
+            child: RaisedButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Text("Buscar Cliente", style: TextStyle(color: Colors.white),),
+                  Icon(Icons.search,color: Colors.white,)
+                ],
+              ),
+              color: Colors.lightGreen,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),),
+              onPressed: () async{
+                final Cliente resultCliente = await showSearch(context: context, delegate: ClientSearch());
+                print(resultCliente);
+                if(resultCliente != null){
+                  _cliente.text = resultCliente.nome;
+                  idCliente = resultCliente.id;
+                }
 
+              },
+            ),
+          ),
+          TextFormField(
+            controller: _cliente,
+            decoration:InputDecorationAcessorios().input("CLIENTE"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.text,
+            readOnly:true,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _valor,
+            decoration:InputDecorationAcessorios().input("VALOR"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.number,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _tipo,
+            decoration:InputDecorationAcessorios().input("TIPO"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.text,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _marca,
+            decoration:InputDecorationAcessorios().input("MARCA"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.text,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _modelo,
+            decoration: InputDecorationAcessorios().input("MODELO"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.text,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _defeito,
+            decoration: InputDecorationAcessorios().input("DEFEITO"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.multiline,
+            maxLines: 3,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _descricao,
+            decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.multiline,
+            maxLines: 3,
+            validator: _validaCampos,
+          ),
+          TextFormField(
+            controller: _senhaDesbloqueio,
+            decoration: InputDecorationAcessorios().input("SENHA DE DESBLOQUEIO"),
+            style: TextStyle(color: Colors.green),
+            keyboardType: TextInputType.text,
+            validator: _validaCampos,
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          RaisedButton(
+            elevation: 0,
+            child:  Text(
+              "Salvar",
+              style: TextStyle(color: Colors.white,fontSize: 18),
+            ),
+            color: Colors.lightGreen,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),),
+            onPressed: _sendForm,
+          )
+        ],
+      ),
+    );
+  }
+
+  String _validaCampos(String value) {
+    if (value.length == 0) {
+      return "Informe o Campo";
+    }
+    return null;
+  }
+
+  _sendForm() {
+    if (_key.currentState.validate()) {
+      if(servico != null){
+        ServiceOrderWebClient().update(ServicesOrder(
+            id: servico.id,
+            idCliente: idCliente,
+            status: servico.status,
+            dataEntrada: servico.dataEntrada.substring(0,10),
+            tipo: _tipo.text.trim(),
+            marca: _marca.text.trim(),
+            modelo: _modelo.text.trim(),
+            defeito: _defeito.text.trim(),
+            descricao: _descricao.text.trim(),
+            senhaDesbloqueio: _senhaDesbloqueio.text.trim(),
+            valorOrcado: double.parse(_valor.text.trim()),
+            dataSaida:null
+        )).then((value){
+          if(value == 200){
+            print("ALTEROU");
+          }
+        });
+        Navigator.pop(context);
+      }else{
+        ServiceOrderWebClient().save(ServicesOrder(
+            id: 0,
+            idCliente: idCliente,
+            status: "Aberto",
+            dataEntrada: formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd]),
+            tipo: _tipo.text.trim(),
+            marca: _marca.text.trim(),
+            modelo: _modelo.text.trim(),
+            defeito: _defeito.text.trim(),
+            descricao: _descricao.text.trim(),
+            idClienteNavigation: resultCliente,
+            senhaDesbloqueio: _senhaDesbloqueio.text.trim(),
+            valorOrcado: double.parse(_valor.text.trim()),
+            dataSaida:null
+        )).then((value){
+          if(value == 201){
+            print("Inseriu!");
+          }
+        });
+        Navigator.pop(context);
+      }
+    } else {
+      setState(() {
+        _validate = true;
+      });
+    }
+  }
+
+
+
+
+  @override
+  void initState() {
+    if(servico != null){
+      _cliente.text = servico.idClienteNavigation.nome;
+      _descricao.text = servico.descricao;
+      _modelo.text = servico.modelo;
+      _defeito.text = servico.defeito;
+      _marca.text = servico.marca;
+      _valor.text = servico.valorOrcado.toString();
+      _senhaDesbloqueio.text = servico.senhaDesbloqueio;
+      _tipo.text = servico.tipo;
+      idCliente = servico.idCliente;
+    }
+    super.initState();
+  }
+
+
+}
 
