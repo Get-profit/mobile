@@ -12,12 +12,23 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
 
   GlobalKey<FormState> _keyForm = new GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String texto, Color color){
+    final snackbar = SnackBar(
+      content: Text(texto,style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+      duration: Duration(seconds: 1),
+      backgroundColor: color,
+
+    );
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+  }
   bool _validate = false;
   TextEditingController _login = TextEditingController();
   TextEditingController _senha = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
@@ -124,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
       print("Senha:" + _senha.text.toString());
       UserWebClient().login(_login.text.trim().toString(),_senha.text.trim().toString()).then((value){
         if(value.id != null){
+          _showSnackBar("Loading...", Colors.green);
           Future.delayed(const Duration(milliseconds: 2000), () {
             Navigator.of(context).push(
               MaterialPageRoute(
@@ -133,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
           });
 
         }else{
-          print("usuario invalido");
+          _showSnackBar("Usuário ou Senha Inválidos!", Colors.redAccent);
         }
 
       });

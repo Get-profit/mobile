@@ -55,7 +55,7 @@ class ServiceOrderWebClient {
       'descricao': service.descricao,
       'senhaDesbloqueio': service.senhaDesbloqueio,
       'valorOrcado': service.valorOrcado,
-      'dataSaida':null,
+      'dataSaida': service.dataEntrada,
     };
     final Response response = await client.put(serviceOrderUrl,
         headers: {

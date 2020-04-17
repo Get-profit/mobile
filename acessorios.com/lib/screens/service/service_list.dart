@@ -4,10 +4,10 @@ import 'package:get_profit/components/progress.dart';
 import 'package:get_profit/http/webclients/service_webclient.dart';
 import 'package:get_profit/models/servico.dart';
 import 'package:get_profit/screens/client/client_list.dart';
-import 'package:get_profit/screens/client/cliente_screen.dart';
+import 'package:get_profit/screens/login_screen.dart';
 import 'package:get_profit/screens/service/service_screen.dart';
 import 'package:get_profit/screens/user/user_list.dart';
-import 'package:get_profit/screens/user/user_screen.dart';
+import 'package:date_format/date_format.dart';
 
 class ServiceList extends StatefulWidget {
   @override
@@ -15,6 +15,7 @@ class ServiceList extends StatefulWidget {
 }
 
 class _ServiceListState extends State<ServiceList> {
+
   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,13 @@ class _ServiceListState extends State<ServiceList> {
         backgroundColor: Colors.green,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.close),
-            onPressed: ()=> Navigator.pop(context),)
+            onPressed: (){
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => UserList()),
+              );
+            },)
         ],
       ),
       drawer: Drawer(
@@ -87,9 +94,8 @@ class _ServiceListState extends State<ServiceList> {
                     itemBuilder: (context, index) {
                       final ServicesOrder servico = servicos[index];
                       return Card(
-                        child: ListTile(
-                          contentPadding: EdgeInsets.only(right: 60,left: 20),
-                          trailing: IconButton(icon:Icon(Icons.keyboard_arrow_right), onPressed: (){},),
+                        child: ExpansionTile(
+                          //trailing: IconButton(icon:Icon(Icons.keyboard_arrow_right), onPressed: (){},),
                           title: Text(servico.id.toString() + " - "+
                             servico.idClienteNavigation.nome.toString(),
                             style: TextStyle(
@@ -104,13 +110,33 @@ class _ServiceListState extends State<ServiceList> {
                               fontSize: 14.0,
                             ),
                           ),
-                          onTap: (){
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ServiceScreen(servico: servico,),
-                              ),
-                            );
-                          },
+                          children: <Widget>[
+                            ListTile(
+                              title: Text("Concluir Serviço"),
+                              trailing: Icon(Icons.done),
+                              onTap: (){
+                                showAlertDialog(context, servico,"finalizar");
+                              },
+                            ),
+                            ListTile(
+                              title: Text("Alterar Serviço"),
+                              trailing: Icon(Icons.update),
+                              onTap: (){
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ServiceScreen(servico: servico,),
+                                  ),
+                                );
+                              },
+                            ),
+                            ListTile(
+                              title: Text("Excluir Serviço"),
+                              trailing: Icon(Icons.delete),
+                              onTap: (){
+                                showAlertDialog(context, servico, "excluir");
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -143,6 +169,84 @@ class _ServiceListState extends State<ServiceList> {
         ),
       ),
     );
+  }
+
+  showAlertDialog(BuildContext context, ServicesOrder service,String tipo) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancelar", style: TextStyle(color: Colors.redAccent),),
+      onPressed:  () {
+        Navigator.pop(context);
+      },
+    );
+    Widget acceptButton = FlatButton(
+      child: Text("Confirmar", style: TextStyle(color: Colors.green)),
+      onPressed:  () {
+        if(tipo == "finalizar"){
+          ServiceOrderWebClient().update(ServicesOrder(
+              id: service.id,
+              idCliente: service.idCliente,
+              status: "Finalizado",
+              dataEntrada: service.dataEntrada.substring(0,10),
+              tipo: service.tipo,
+              marca: service.marca,
+              modelo: service.modelo,
+              defeito: service.defeito,
+              descricao: service.descricao,
+              senhaDesbloqueio: service.senhaDesbloqueio,
+              valorOrcado: service.valorOrcado,
+              dataSaida: formatDate(DateTime.now(), [yyyy, '-', mm, '-', dd])
+          )).then((value){
+            if(value == 200){
+              setState(() {
+                print("Finalizado");
+              });
+            }
+          });
+        }else{
+          ServiceOrderWebClient().delete(service.id.toString()).then((value){
+            if(value == 204){
+              setState(() {
+
+              });
+            }
+          });
+        }
+        Navigator.pop(context);
+      },
+    );
+    //configura o AlertDialog
+
+
+    if(tipo == "finalizar"){
+      AlertDialog alert = AlertDialog(
+        title: Text("Deseja Finalizar a Ordem de Serviço?", style: TextStyle(color: Colors.green),),
+        actions: [
+          acceptButton,
+          cancelButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }else{
+      AlertDialog alert = AlertDialog(
+        title: Text("Deseja Excluir a Ordem de Serviço?", style: TextStyle(color: Colors.green),),
+        actions: [
+          acceptButton,
+          cancelButton,
+        ],
+      );
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    }
+
   }
 }
 

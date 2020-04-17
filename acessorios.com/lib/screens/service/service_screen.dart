@@ -6,7 +6,6 @@ import 'package:get_profit/delegates/client_search.dart';
 import 'package:get_profit/http/webclients/service_webclient.dart';
 import 'package:get_profit/models/cliente.dart';
 import 'package:get_profit/models/servico.dart';
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:date_format/date_format.dart';
 
 class ServiceScreen extends StatefulWidget {
@@ -198,7 +197,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             descricao: _descricao.text.trim(),
             senhaDesbloqueio: _senhaDesbloqueio.text.trim(),
             valorOrcado: double.parse(_valor.text.trim()),
-            dataSaida:null
+            dataSaida: servico.dataSaida
         )).then((value){
           if(value == 200){
             print("ALTEROU");
