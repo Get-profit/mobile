@@ -8,6 +8,16 @@ import 'package:get_profit/screens/login_screen.dart';
 import 'package:get_profit/screens/service/service_screen.dart';
 import 'package:get_profit/screens/user/user_list.dart';
 import 'package:date_format/date_format.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+Future<bool> checkLogin() async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  bool CheckValue = prefs.containsKey('login');
+  if(CheckValue){
+    return true;
+  }
+  return false;
+}
 
 class ServiceList extends StatefulWidget {
   @override
@@ -15,10 +25,10 @@ class ServiceList extends StatefulWidget {
 }
 
 class _ServiceListState extends State<ServiceList> {
-
   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
+  bool _login;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -74,7 +84,13 @@ class _ServiceListState extends State<ServiceList> {
           )
       ),
 
-      body: FutureBuilder<List<ServicesOrder>>(
+      body: !_login ?
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => LoginScreen(),
+        ),
+      )
+          : FutureBuilder<List<ServicesOrder>>(
         future: _webClient.findAll(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -248,5 +264,14 @@ class _ServiceListState extends State<ServiceList> {
     }
 
   }
+
+  @override
+  void initState() async{
+    _login = await checkLogin();
+    print("LOOOGIN");
+    print(_login);
+    super.initState();
+  }
+
 }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_profit/components/input.dart';
 import 'package:get_profit/http/webclients/user_webclient.dart';
 import 'package:get_profit/screens/service/service_list.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
 
@@ -10,6 +11,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
 
   GlobalKey<FormState> _keyForm = new GlobalKey();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -130,25 +132,21 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _sendForm() {
-    if (_keyForm.currentState.validate()) {
-      print("Login: " + _login.text.toString());
-      print("Senha:" + _senha.text.toString());
-      UserWebClient().login(_login.text.trim().toString(),_senha.text.trim().toString()).then((value){
+    if (_keyForm.currentState.validate()){
+      UserWebClient().login(_login.text.trim().toString(),_senha.text.trim().toString()).then((value) async{
         if(value.id != null){
-          _showSnackBar("Loading...", Colors.green);
-          Future.delayed(const Duration(milliseconds: 2000), () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => ServiceList(),
-              ),
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.setString("login",value.apelido);
+            _showSnackBar("Loading...", Colors.green);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ServiceList()),
             );
-          });
-
         }else{
           _showSnackBar("Usuário ou Senha Inválidos!", Colors.redAccent);
         }
-
       });
+
     } else {
       setState(() {
         _validate = true;

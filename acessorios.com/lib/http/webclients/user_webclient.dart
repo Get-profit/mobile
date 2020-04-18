@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get_profit/http/webclient.dart';
 import 'package:get_profit/models/usuario.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserWebClient {
   Future<List<User>> findAll() async {
@@ -48,7 +49,9 @@ class UserWebClient {
         },
         body: jsonEncode(loginJson));
     return User.fromJson(jsonDecode(response.body));
+
   }
+
    Future<int> delete(String id) async {
     final Response response = await client.delete("http://35.208.89.16/api/usuarios/$id"
         ,
