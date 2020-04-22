@@ -12,7 +12,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
 
-
   GlobalKey<FormState> _keyForm = new GlobalKey();
   GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   _showSnackBar(String texto, Color color){
@@ -137,11 +136,17 @@ class _LoginScreenState extends State<LoginScreen> {
         if(value.id != null){
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString("login",value.apelido);
+            prefs.setString("senha",_senha.text.trim());
             _showSnackBar("Loading...", Colors.green);
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ServiceList()),
-            );
+            Future.delayed(const Duration(milliseconds: 1000), () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ServiceList()),
+              );
+            });
+            print(prefs.getString("login"));
+            print(prefs.getString("senha"));
+
         }else{
           _showSnackBar("Usuário ou Senha Inválidos!", Colors.redAccent);
         }
