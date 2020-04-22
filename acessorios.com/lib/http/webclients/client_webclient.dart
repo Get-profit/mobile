@@ -37,7 +37,7 @@ class ClienteWebClient {
   }
 
   Future<int> delete(String id) async {
-    final Response response = await client.delete("http://35.208.89.16/api/clientes/$id"
+    final Response response = await client.delete("https://projeto-acessorios.appspot.com/api/clientes/$id"
       ,
       headers: {
         'Content-type': 'application/json',

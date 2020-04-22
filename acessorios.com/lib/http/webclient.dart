@@ -6,8 +6,8 @@ final Client client = HttpClientWithInterceptor.build(
   interceptors: [LoggingInterceptor()],
 );
 
-  const String clientUrl = 'http://35.208.89.16/api/clientes';
-  const String userUrl = "http://35.208.89.16/api/usuarios";
-  const String serviceOrderUrl = 'http://35.208.89.16/api/ordemservico';
+  const String clientUrl = 'https://projeto-acessorios.appspot.com/api/clientes';
+  const String userUrl = "https://projeto-acessorios.appspot.com/api/usuarios";
+  const String serviceOrderUrl = 'https://projeto-acessorios.appspot.com/api/ordemservico';
 
 

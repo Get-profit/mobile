@@ -63,7 +63,7 @@ class ClientSearch extends SearchDelegate<Cliente>{
 
   Future<List> suggestions(String search) async{
 
-    http.Response response = await http.post("http://35.208.89.16/api/clientes/$search",
+    http.Response response = await http.post("https://projeto-acessorios.appspot.com/api/clientes/$search",
         headers: {
       'Content-type': 'application/json',
       'Accept': 'application/json',

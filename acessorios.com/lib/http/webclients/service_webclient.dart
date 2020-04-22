@@ -10,7 +10,7 @@ class ServiceOrderWebClient {
   ////METODO OK
   Future<List<ServicesOrder>> findAll() async {
     final Response response =
-    await client.get("http://35.208.89.16/api/ordemservico/RecuperarTodosAbertos").timeout(Duration(seconds: 5));
+    await client.get("https://projeto-acessorios.appspot.com/api/ordemservico/RecuperarTodosAbertos").timeout(Duration(seconds: 5));
     final List<dynamic> decodedJson = jsonDecode(response.body);
     return decodedJson
         .map((dynamic json) => ServicesOrder.fromJson(json))
@@ -68,7 +68,7 @@ class ServiceOrderWebClient {
 
    ////METODO OK
   Future<int> delete(String id) async {
-    final Response response = await client.delete("http://35.208.89.16/api/ordemservico/$id"
+    final Response response = await client.delete("https://projeto-acessorios.appspot.com/api/ordemservico/$id"
       ,
       headers: {
         'Content-type': 'application/json',

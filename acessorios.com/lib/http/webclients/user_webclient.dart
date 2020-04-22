@@ -42,7 +42,7 @@ class UserWebClient {
         "apelido": login,
         "senha": senha
     };
-    final Response response = await client.post("http://35.208.89.16/api/login"
+    final Response response = await client.post("https://projeto-acessorios.appspot.com/api/login"
         ,
         headers: {
           'Content-type': 'application/json',
@@ -53,7 +53,7 @@ class UserWebClient {
   }
 
    Future<int> delete(String id) async {
-    final Response response = await client.delete("http://35.208.89.16/api/usuarios/$id"
+    final Response response = await client.delete("https://projeto-acessorios.appspot.com/api/usuarios/$id"
         ,
         headers: {
           'Content-type': 'application/json',
