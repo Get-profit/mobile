@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get_profit/models/login.dart';
-import 'package:get_profit/screens/client/client_list.dart';
-import 'package:get_profit/screens/client/cliente_screen.dart';
 import 'package:get_profit/screens/login_screen.dart';
 import 'package:get_profit/screens/service/service_list.dart';
-import 'package:get_profit/screens/service/service_screen.dart';
-import 'package:get_profit/screens/user/user_list.dart';
-import 'package:get_profit/screens/user/user_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:scoped_model/scoped_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 
-void main() async{
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var login = prefs.getString("login");
+  print(login);
   runApp(MaterialApp(
-    home: LoginScreen(),
+    home: login == null ? LoginScreen() : ServiceList(),
     theme: ThemeData(
         textTheme: GoogleFonts.montserratTextTheme(),
         hintColor: Colors.white,

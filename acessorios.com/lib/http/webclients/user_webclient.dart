@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:get_profit/http/webclient.dart';
 import 'package:get_profit/models/usuario.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class UserWebClient {
   Future<List<User>> findAll() async {

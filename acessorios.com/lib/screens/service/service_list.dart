@@ -19,21 +19,6 @@ class ServiceList extends StatefulWidget {
 
 class _ServiceListState extends State<ServiceList> {
 
-  @override
-  initState() async{
-    super.initState();
-    checkLogin();
-  }
-
-  checkLogin() async{
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool checkValue = prefs.containsKey('login');
-    if(!checkValue){
-      Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (BuildContext context) => LoginScreen()), (Route<dynamic> route) => false);
-    }
-  }
-
-
   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
   Widget build(BuildContext context){
     return Scaffold(
@@ -44,11 +29,12 @@ class _ServiceListState extends State<ServiceList> {
         backgroundColor: Colors.green,
         actions: <Widget>[
           IconButton(icon: Icon(Icons.close),
-            onPressed: (){
-              Navigator.pop(context);
-              Navigator.push(
+            onPressed: () async{
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+            prefs.remove("login");
+              Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => UserList()),
+                MaterialPageRoute(builder: (context) => LoginScreen()),
               );
             },)
         ],

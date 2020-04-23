@@ -136,7 +136,6 @@ class _LoginScreenState extends State<LoginScreen> {
         if(value.id != null){
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString("login",value.apelido);
-            prefs.setString("senha",_senha.text.trim());
             _showSnackBar("Loading...", Colors.green);
             Future.delayed(const Duration(milliseconds: 1000), () {
               Navigator.push(
@@ -145,7 +144,6 @@ class _LoginScreenState extends State<LoginScreen> {
               );
             });
             print(prefs.getString("login"));
-            print(prefs.getString("senha"));
 
         }else{
           _showSnackBar("Usuário ou Senha Inválidos!", Colors.redAccent);
