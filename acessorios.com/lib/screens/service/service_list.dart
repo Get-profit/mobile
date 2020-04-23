@@ -9,7 +9,7 @@ import 'package:get_profit/screens/service/service_screen.dart';
 import 'package:get_profit/screens/user/user_list.dart';
 import 'package:date_format/date_format.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:date_format/date_format.dart';
 
 
 class ServiceList extends StatefulWidget {
@@ -18,6 +18,7 @@ class ServiceList extends StatefulWidget {
 }
 
 class _ServiceListState extends State<ServiceList> {
+
 
   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
   Widget build(BuildContext context){
@@ -107,7 +108,7 @@ class _ServiceListState extends State<ServiceList> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          subtitle: Text("Data de Entrada: "+ servico.dataEntrada.substring(0,10) + "\n" + "Valor: " +
+                          subtitle: Text("Data de Entrada: "+ formatDate(DateTime.parse(servico.dataEntrada), [dd, '/', mm, '/', yyyy]) + "\n" + "Valor: " +
                               servico.valorOrcado.toString() + "\n" +"${servico.tipo}: " + servico.marca +" - " + servico.modelo
                             ,
                             style: TextStyle(
@@ -251,6 +252,14 @@ class _ServiceListState extends State<ServiceList> {
       );
     }
 
+  }
+
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
   }
 
 }

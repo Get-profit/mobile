@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:date_format/date_format.dart';
 import 'package:get_profit/http/webclient.dart';
-import 'package:get_profit/models/cliente.dart';
 import 'package:get_profit/models/servico.dart';
 import 'package:http/http.dart';
 

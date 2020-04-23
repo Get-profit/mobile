@@ -140,5 +140,13 @@ class _ClientListState extends State<ClientList> {
       },
     );
   }
+
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
+  }
 }
 
