@@ -11,6 +11,16 @@ class ClientList extends StatefulWidget {
 }
 
 class _ClientListState extends State<ClientList> {
+
+
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
+  }
+
   final ClienteWebClient _webClient = ClienteWebClient();
 
   @override
@@ -141,12 +151,6 @@ class _ClientListState extends State<ClientList> {
     );
   }
 
-  @override
-  void initState() {
-    setState(() {
 
-    });
-    super.initState();
-  }
 }
 

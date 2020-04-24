@@ -82,6 +82,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
             decoration: InputDecorationAcessorios().input("NOME"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
+            maxLength: 200,
             validator: _validaNome,
           ),
           TextFormField(
@@ -89,6 +90,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
             decoration: InputDecorationAcessorios().input("EMAIL"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.emailAddress,
+            maxLength: 200,
             validator: _validaEmail,
           ),
           TextFormField(
@@ -96,20 +98,22 @@ class _ClienteScreenState extends State<ClienteScreen> {
             decoration: InputDecorationAcessorios().input("CPF"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.number,
+            maxLength: 11,
             validator: _validaCPF,
           ),
           TextFormField(
             controller: _rg,
             decoration: InputDecorationAcessorios().input("RG"),
             style: TextStyle(color: Colors.green),
+            maxLength: 12,
             keyboardType: TextInputType.number,
-            validator: _validaRG,
           ),
           TextFormField(
             controller: _telefone,
             decoration: InputDecorationAcessorios().input("TELEFONE"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.phone,
+            maxLength: 15,
             validator: _validaTelefone,
           ),
           TextFormField(
@@ -117,21 +121,21 @@ class _ClienteScreenState extends State<ClienteScreen> {
             decoration: InputDecorationAcessorios().input("CEP"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.number,
-            validator: _validaCEP,
+            maxLength: 10,
           ),
           TextFormField(
             controller: _cidade,
             decoration: InputDecorationAcessorios().input("CIDADE"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
-            validator: _validaCidade,
+            maxLength: 200,
           ),
           TextFormField(
             controller: _logradouro,
             decoration: InputDecorationAcessorios().input("LOGRADOURO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
-            validator: _validaLogradouro,
+            maxLength: 200,
           ),
           Row(
             children: <Widget>[
@@ -142,7 +146,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                   decoration: InputDecorationAcessorios().input("BAIRRO"),
                   style: TextStyle(color: Colors.green),
                   keyboardType: TextInputType.text,
-                  validator: _validaBairro,
+                  maxLength: 200,
                 ),
               ),
               Padding(
@@ -154,7 +158,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
                     decoration: InputDecorationAcessorios().input("UF"),
                     style: TextStyle(color: Colors.green),
                     keyboardType: TextInputType.text,
-                    validator: _validaEstado,
+                    maxLength: 200,
                   ),
                 ),
               ),
@@ -165,7 +169,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
             decoration: InputDecorationAcessorios().input("NÚMERO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.number,
-            validator: _validaNumero,
+            maxLength: 4,
           ),
           SizedBox(
             height: 12,
@@ -196,15 +200,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
     }
     return null;
   }
-  String _validaCEP(String cep) {
-    if(cep.isEmpty){
-      return "Informe o CEP";
-    }else if(cep.length != 8){
-      return "CEP Inválido";
-    }
-    else
-    return null;
-  }
+
   String _validaEmail(String email) {
     const Pattern pattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     final RegExp regex = RegExp(pattern);
@@ -224,63 +220,16 @@ class _ClienteScreenState extends State<ClienteScreen> {
     else
       return null;
   }
-  String _validaRG(String rg) {
-    if(rg.isEmpty){
-      return "Informe o RG";
-    }else if(rg.length > 8){
-      return "RG Inválido";
-    }
-    else
-      return null;
-  }
+
   String _validaTelefone(String telefone) {
     if(telefone.isEmpty){
       return "Informe o Telefone";
-    }else if(telefone.length > 11)
+    }else if(telefone.length > 15)
       return "Telefone Inválido";
     else
       return null;
   }
-  String _validaBairro(String bairro) {
-    if(bairro.isEmpty){
-      return "Informe o Bairro";
-    }
-    else
-      return null;
-  }
-  String _validaCidade(String cidade) {
-    if(cidade.isEmpty){
-      return "Informe a Cidade";
-    }
-    else
-      return null;
-  }
-  String _validaEstado(String estado) {
-    if(estado.isEmpty){
-      return "Informe o Estado";
-    }else if(estado.length > 2)
-      return "Informe a sigla do Estado";
-    else
-      return null;
-  }
-  String _validaNumero(String numero) {
-    if(numero.isEmpty){
-      return "Informe o Numero";
-    }else if(numero.length > 5)
-      return "O número deve possuir até 5 dígitos";
-    else
-      return null;
-  }
-  String _validaLogradouro(String rua) {
-    const Pattern pattern = r"^[aA-zZ]+((\s[aA-zZ]+)+)?$";
-    final RegExp regex = RegExp(pattern);
-    if (rua.length == 0) {
-      return "Informe o Logradouro";
-    } else if(!regex.hasMatch(rua)){
-      return "Logradouro inválido";
-    }
-    return null;
-  }
+
 
   _sendForm() {
     if (_key.currentState.validate()) {
@@ -316,7 +265,7 @@ class _ClienteScreenState extends State<ClienteScreen> {
           email:_email.text.trim(),
           cep:_cep.text.trim().replaceAll('-', '').replaceAll('.', ''),
           logradouro: _logradouro.text.trim(),
-          numero:int.parse(_numero.text.trim()),
+          numero: _numero.text == "" ? null :int.parse(_numero.text.trim()),
           bairro:_bairro.text.trim(),
           cidade:_cidade.text.trim(),
           estado:_estado.text.trim(),

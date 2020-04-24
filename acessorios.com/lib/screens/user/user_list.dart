@@ -12,6 +12,13 @@ class UserList extends StatefulWidget {
 
 class _UserListState extends State<UserList> {
 
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
+  }
   final UserWebClient _webClient = UserWebClient();
 
   @override
@@ -141,13 +148,6 @@ class _UserListState extends State<UserList> {
     );
   }
 
-  @override
-  void initState() {
-    setState(() {
-
-    });
-    super.initState();
-  }
 
 
 }

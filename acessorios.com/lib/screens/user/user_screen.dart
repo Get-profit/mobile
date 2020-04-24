@@ -85,6 +85,7 @@ class _UserScreenState extends State<UserScreen> {
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
             validator: _validaNome,
+            maxLength: 20,
           ),
           SizedBox(
             height: 16,
@@ -96,6 +97,7 @@ class _UserScreenState extends State<UserScreen> {
             keyboardType: TextInputType.text,
             obscureText: true,
             validator: _validaSenha,
+            maxLength: 20,
           ),
           SizedBox(
             height: 16,
@@ -104,6 +106,7 @@ class _UserScreenState extends State<UserScreen> {
             controller: _cargo,
             decoration: InputDecorationAcessorios().input("CARGO"),
             style: TextStyle(color: Colors.green),
+            maxLength: 50,
             keyboardType: TextInputType.text,
             validator: _validaCargo,
           ),

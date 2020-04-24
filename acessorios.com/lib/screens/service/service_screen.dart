@@ -110,6 +110,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration:InputDecorationAcessorios().input("VALOR"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.number,
+            maxLength: 9,
             validator: _validaCampos,
           ),
           TextFormField(
@@ -117,6 +118,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration:InputDecorationAcessorios().input("TIPO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
+            maxLength: 100,
             validator: _validaCampos,
           ),
           TextFormField(
@@ -124,6 +126,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration:InputDecorationAcessorios().input("MARCA"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
+            maxLength: 100,
             validator: _validaCampos,
           ),
           TextFormField(
@@ -131,6 +134,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration: InputDecorationAcessorios().input("MODELO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
+            maxLength: 100,
             validator: _validaCampos,
           ),
           TextFormField(
@@ -138,6 +142,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration: InputDecorationAcessorios().input("DEFEITO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.multiline,
+            maxLength: 500,
             maxLines: 3,
             validator: _validaCampos,
           ),
@@ -146,6 +151,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration: InputDecorationAcessorios().input("DESCRIÇÃO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.multiline,
+            maxLength: 500,
             maxLines: 3,
             validator: _validaCampos,
           ),
@@ -154,6 +160,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
             decoration: InputDecorationAcessorios().input("SENHA DE DESBLOQUEIO"),
             style: TextStyle(color: Colors.green),
             keyboardType: TextInputType.text,
+            maxLength: 20,
             validator: _validaCampos,
           ),
           SizedBox(

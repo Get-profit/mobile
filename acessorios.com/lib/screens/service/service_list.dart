@@ -20,6 +20,14 @@ class ServiceList extends StatefulWidget {
 class _ServiceListState extends State<ServiceList> {
 
 
+  @override
+  void initState() {
+    setState(() {
+
+    });
+    super.initState();
+  }
+
   final ServiceOrderWebClient _webClient = ServiceOrderWebClient();
   Widget build(BuildContext context){
     return Scaffold(
@@ -254,13 +262,6 @@ class _ServiceListState extends State<ServiceList> {
 
   }
 
-  @override
-  void initState() {
-    setState(() {
-
-    });
-    super.initState();
-  }
 
 }
 
