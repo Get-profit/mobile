@@ -28,6 +28,9 @@ class _UserListState extends State<UserList> {
         title: Text('USUÁRIOS',style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: Colors.green,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: FutureBuilder<List<User>>(
         future: _webClient.findAll(),

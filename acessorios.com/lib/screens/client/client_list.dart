@@ -30,6 +30,9 @@ class _ClientListState extends State<ClientList> {
         title: Text('CLIENTES',style: TextStyle(color: Colors.white),),
         centerTitle: true,
         backgroundColor: Colors.green,
+        iconTheme: IconThemeData(
+          color: Colors.white,
+        ),
       ),
       body: FutureBuilder<List<Cliente>>(
         future: _webClient.findAll(),

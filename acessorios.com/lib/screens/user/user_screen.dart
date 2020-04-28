@@ -19,6 +19,16 @@ class _UserScreenState extends State<UserScreen> {
   final TextEditingController _cargo = TextEditingController();
 
   GlobalKey<FormState> _key = new GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String texto, Color color){
+    final snackbar = SnackBar(
+      content: Text(texto,style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+      duration: Duration(seconds: 1),
+      backgroundColor: color,
+
+    );
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+  }
   bool _validate = false;
 
   @override
@@ -165,7 +175,9 @@ class _UserScreenState extends State<UserScreen> {
           cargo: _cargo.text.trim()
         )).then((value){
           if(value == 200){
-            print("ALTEROU");
+            Navigator.pop(context);
+          }else{
+            _showSnackBar("USUÁRIO com LOGIN já Cadastrado!", Colors.redAccent);
           }
         });
         Navigator.pop(context);
@@ -176,9 +188,12 @@ class _UserScreenState extends State<UserScreen> {
             senha:_senha.text.trim(),
             cargo: _cargo.text.trim()
         )).then((value){
-          print("CRIADO");
+          if(value != null){
+            Navigator.pop(context);
+          }
+          _showSnackBar("USUÁRIO com LOGIN já Cadastrado!", Colors.redAccent);
         });
-        Navigator.pop(context);
+
       }
     } else {
       setState(() {

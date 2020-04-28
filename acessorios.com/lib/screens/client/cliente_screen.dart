@@ -16,6 +16,16 @@ class ClienteScreen extends StatefulWidget {
 class _ClienteScreenState extends State<ClienteScreen> {
 
   GlobalKey<FormState> _key = new GlobalKey();
+  GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  _showSnackBar(String texto, Color color){
+    final snackbar = SnackBar(
+      content: Text(texto,style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
+      duration: Duration(seconds: 1),
+      backgroundColor: color,
+
+    );
+    _scaffoldKey.currentState.showSnackBar(snackbar);
+  }
   bool _validate = false;
   Cliente get cliente => widget.cliente;
   TextEditingController _nome = TextEditingController();
@@ -251,8 +261,9 @@ class _ClienteScreenState extends State<ClienteScreen> {
           estado:_estado.text.trim(),
         )).then((value){
           if(value == 200){
-            print("ALTEROU");
+            Navigator.pop(context);
           }
+          _showSnackBar("Cliente com CPF já Cadastrado!", Colors.redAccent);
         });
         Navigator.pop(context);
       }else{
@@ -270,10 +281,12 @@ class _ClienteScreenState extends State<ClienteScreen> {
           cidade:_cidade.text.trim(),
           estado:_estado.text.trim(),
         )).then((value){
-          print("CRIADO");
-          print(value);
+          if(value !=null){
+            Navigator.pop(context);
+          }
+          _showSnackBar("Cliente com CPF já Cadastrado!", Colors.redAccent);
         });
-        Navigator.pop(context);
+
       }
     } else {
       // erro de validação

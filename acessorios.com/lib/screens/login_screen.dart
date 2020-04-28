@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 RaisedButton(
                   elevation: 0,
                   child: Text(
-                    "Salvar",
+                    "ENTRAR",
                     style: TextStyle(color: Colors.white,fontSize: 18),
                   ),
                   color: Colors.lightGreen,
